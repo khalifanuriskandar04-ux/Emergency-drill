@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12366d">
+<title>CSM WYVERN Emergency Drill</title>
+<style>
+:root{--navy:#12366d;--red:#c51f2a;--green:#16804b;--orange:#e87518;--bg:#f4f7fb;--text:#172033}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{background:linear-gradient(135deg,#0c2855,#174783);color:white;padding:22px 18px 18px;border-radius:0 0 24px 24px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:52px;height:52px;border-radius:14px;background:white;color:var(--navy);display:grid;place-items:center;font-size:27px;font-weight:800}
+h1{font-size:23px;margin:0}.sub{opacity:.85;margin-top:4px;font-size:13px}
+main{max-width:900px;margin:auto;padding:16px}
+.card{background:white;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 4px 18px #10204012}
+label{font-weight:700;font-size:13px;display:block;margin:8px 0 6px}
+select,input,textarea{width:100%;border:1px solid #d5dce7;border-radius:11px;padding:12px;font-size:15px;background:#fff}
+button{border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer}
+.primary{background:var(--navy);color:white}.danger{background:var(--red);color:white}.green{background:var(--green);color:white}.ghost{background:#eef3fa;color:var(--navy)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:650px){.grid2{grid-template-columns:1fr}}
+.title{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:10px}
+.badge{display:inline-block;padding:6px 9px;border-radius:999px;background:#eaf0fa;color:var(--navy);font-size:12px;font-weight:700}
+.crew{border:1px solid #dfe5ee;border-radius:15px;margin:9px 0;overflow:hidden}
+.crewtop{display:grid;grid-template-columns:38px 1fr auto;gap:9px;align-items:center;padding:11px;background:#f9fbfd}
+.num{width:30px;height:30px;border-radius:50%;background:var(--navy);color:white;display:grid;place-items:center;font-weight:800}
+.name{font-weight:800}.rank{font-size:12px;color:#68758b;margin-top:2px}
+.team{padding:6px 9px;border-radius:8px;background:#e9f6ef;color:#11643d;font-size:11px;font-weight:800;text-align:center}
+.tasks{padding:10px 15px 12px}.tasks ul{margin:5px 0 0;padding-left:20px}.tasks li{margin:5px 0;font-size:13px}
+.signal{background:#fff7e5;border-left:4px solid #e2a300;padding:10px;border-radius:10px;margin-top:8px;font-size:13px}
+.steps{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.step{min-width:125px;background:#edf3fb;border-radius:13px;padding:10px;text-align:center;font-size:12px;font-weight:700}.step b{display:block;background:var(--navy);color:#fff;border-radius:50%;width:25px;height:25px;line-height:25px;margin:0 auto 6px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.hidden{display:none}.small{font-size:12px;color:#69758a}.report{white-space:pre-wrap;background:#101a2b;color:#f3f6fb;padding:14px;border-radius:13px;font-size:12px}
+</style>
+
+<style>
+.pro-dashboard{max-width:900px;margin:16px auto 0;padding:18px;background:linear-gradient(145deg,#071a35,#0c315f 55%,#104d83);border-radius:24px;color:#fff;box-shadow:0 12px 35px #071a3530}
+.dash-top{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.eyebrow{font-size:10px;letter-spacing:1.4px;opacity:.7;font-weight:800}.dash-top h2{font-size:25px;margin:7px 0 4px;color:#fff}.dash-top p{margin:0;color:#d6e4f4;font-size:12px;max-width:560px}.ship-status{font-size:10px;font-weight:900;background:#ffffff16;border:1px solid #ffffff24;padding:8px 10px;border-radius:99px;white-space:nowrap}.pulse{display:inline-block;width:7px;height:7px;background:#50d68a;border-radius:50%;margin-right:5px;box-shadow:0 0 0 4px #50d68a20}
+.dash-actions{display:flex;gap:8px;margin:18px 0 13px}.dash-actions button{background:#fff;color:#0b315d;border:0;padding:10px 13px;border-radius:11px;font-size:11px;font-weight:900}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.stat{background:#ffffff10;border:1px solid #ffffff16;border-radius:14px;padding:11px;display:flex;align-items:center;gap:9px}.stat-icon{font-size:19px}.stat b{display:block;font-size:17px}.stat small{font-size:8px;letter-spacing:.7px;color:#bdd0e5;font-weight:800}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.dash-panel{background:#fff;color:#16263a;border-radius:15px;padding:13px}.panel-head{display:flex;justify-content:space-between;font-size:9px;letter-spacing:1px;font-weight:900;color:#56708c;margin-bottom:10px}.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.quick-grid button{padding:9px;background:#eef4fa;color:#10375f;text-align:left;font-size:10px;border-radius:10px}.crew-mini div{padding:6px 0;border-bottom:1px solid #edf1f5}.crew-mini div:last-child{border:0}.crew-mini b{display:block;font-size:10px;color:#0c4e89}.crew-mini span{font-size:11px;color:#617084}.schedule-panel{margin-top:10px}.schedule-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.schedule-strip div{background:#f2f6fa;border-radius:10px;padding:8px}.schedule-strip b{display:block;font-size:8px;color:#0b4e89}.schedule-strip span{display:block;font-size:9px;margin-top:3px;color:#566679}
+@media(max-width:650px){.dash-top{display:block}.ship-status{display:inline-block;margin-top:10px}.stat-grid{grid-template-columns:1fr 1fr}.dash-grid{grid-template-columns:1fr}.schedule-strip{grid-template-columns:1fr 1fr}.schedule-strip div:last-child{grid-column:span 2}}
+</style>
+
+<style id="v10-tanker-dashboard">
+:root{--navy:#061525;--navy2:#0a223b;--steel:#173754;--cyan:#39b9ff;--orange:#ff7a2f;--green:#35d07f}
+body{background:radial-gradient(circle at 80% 0%,#123b5c 0,#061525 42%,#030b13 100%) !important}
+#page-home{max-width:1200px;margin:auto}
+#page-home .card{background:linear-gradient(145deg,rgba(12,39,64,.96),rgba(4,17,29,.97));border:1px solid rgba(73,169,224,.28);box-shadow:0 12px 35px rgba(0,0,0,.28);border-radius:18px;color:#eef7ff}
+#page-home .title{letter-spacing:1.2px}
+.tanker-hero{position:relative;overflow:hidden;border-radius:22px;min-height:260px;padding:30px;background:linear-gradient(90deg,rgba(2,12,22,.98) 0%,rgba(3,18,31,.83) 48%,rgba(4,18,30,.28) 100%),url("a_high_detail_dashboard_ui_screenshot_for_a_marini.png") center/cover;border:1px solid rgba(73,169,224,.35);box-shadow:0 18px 50px #0008}
+.tanker-hero:after{content:"";position:absolute;inset:auto 0 0;height:3px;background:linear-gradient(90deg,#ff5a36,#ffb13b,#39b9ff,#35d07f)}
+.hero-kicker{font-size:12px;color:#7fcfff;letter-spacing:3px;font-weight:800}.hero-title{font-size:42px;font-weight:900;line-height:1.02;margin:8px 0}.hero-sub{color:#a9c7da;letter-spacing:3px;font-size:14px}.ship-badge{display:inline-flex;gap:8px;align-items:center;margin-top:18px;padding:9px 14px;border:1px solid #ffffff2a;border-radius:999px;background:#ffffff0d}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}.vstat{padding:15px;border-radius:15px;background:linear-gradient(145deg,#102f4a,#081a2b);border:1px solid #2b6284}.vstat small{color:#7fa8bf}.vstat b{display:block;font-size:18px;margin-top:5px}.ok{color:#42e38a}.warn{color:#ffb83f}
+.quick-title{font-size:20px;font-weight:900;margin-bottom:10px}.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.quick{border:0;border-radius:15px;padding:18px 12px;text-align:left;color:white;font-weight:800;cursor:pointer;min-height:85px;box-shadow:inset 0 1px #ffffff35,0 8px 20px #0003;transition:.18s}.quick:hover{transform:translateY(-2px);filter:brightness(1.1)}.qfire{background:linear-gradient(135deg,#e83c2f,#8c111b)}.qmob{background:linear-gradient(135deg,#e74b46,#8d1b26)}.qoil{background:linear-gradient(135deg,#e48b17,#8c4a0a)}.qmed{background:linear-gradient(135deg,#19a66a,#075a3a)}.qspace{background:linear-gradient(135deg,#d4a31e,#76580b)}.qabandon{background:linear-gradient(135deg,#248fd0,#114a84)}.qsteer{background:linear-gradient(135deg,#718397,#33485d)}.qother{background:linear-gradient(135deg,#6a57ba,#392a78)}
+.dashboard-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mini-list{display:grid;gap:7px}.mini-item{display:flex;justify-content:space-between;padding:11px 12px;border-radius:11px;background:#ffffff08;border:1px solid #ffffff10}.pill{padding:4px 8px;border-radius:999px;background:#123d2b;color:#58e59a;font-size:11px;font-weight:800}
+@media(max-width:800px){.quick-grid{grid-template-columns:repeat(2,1fr)}.stat-strip,.dashboard-cols{grid-template-columns:1fr 1fr}.hero-title{font-size:31px}}
+@media(max-width:480px){.stat-strip{grid-template-columns:1fr 1fr}.quick-grid{grid-template-columns:1fr 1fr}.tanker-hero{min-height:220px;padding:20px}}
+</style>
+
+<style id="v11-reference-dashboard">
+#page-home{padding:0!important;max-width:none!important}
+.ref-shell{min-height:100vh;background:#03111e;color:#eef7ff;border-radius:0;overflow:hidden;font-family:Arial,sans-serif}
+.ref-layout{display:grid;grid-template-columns:150px 1fr;min-height:100vh}
+.ref-side{background:linear-gradient(180deg,#061b2d,#04111d);border-right:1px solid #24435a;padding:22px 12px;display:flex;flex-direction:column}
+.ref-logo{height:76px;text-align:center;font-weight:900;color:#fff;font-size:13px}.ref-anchor{font-size:39px;color:#f4a04b;line-height:1}.ref-logo span{display:block;color:#9fb7c9;letter-spacing:2px;font-size:9px;margin-top:5px}
+.ref-nav{margin-top:20px;display:grid;gap:5px}.ref-nav button{background:none;border:0;color:#b9cedc;text-align:left;padding:13px 9px;border-radius:9px;font-size:12px;cursor:pointer}.ref-nav button:hover,.ref-nav button.active{background:linear-gradient(90deg,#0d78c5,#0b4d7b);color:#fff}.ref-side-foot{margin-top:auto;font-size:9px;line-height:1.8;color:#7893a6;letter-spacing:1.4px}
+.ref-main{padding:18px 20px 0;background:radial-gradient(circle at 80% 0,#123e5d 0,#061725 34%,#03101b 100%)}
+.ref-hero{min-height:285px;border:1px solid #29546d;border-radius:18px;position:relative;overflow:hidden;padding:28px 30px;background:linear-gradient(90deg,rgba(2,12,22,.98),rgba(2,16,28,.78) 48%,rgba(3,18,30,.28)),url("a_high_detail_dashboard_ui_screenshot_for_a_marini.png") center/cover}
+.ref-hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#ff5b36,#ffae35,#39b9ff,#35d07f)}
+.ref-date{position:absolute;right:22px;top:16px;font-size:11px;color:#b9ccda}.ref-kicker{color:#9bc5df;font-size:11px;letter-spacing:2px}.ref-h1{font-size:43px;font-weight:900;margin:10px 0 2px}.ref-sub{font-size:14px;letter-spacing:4px;color:#9bb5c8}.ref-slogan{margin-top:24px;font-size:13px;letter-spacing:3px;color:#d8e8f2}.ref-status{display:inline-block;margin-top:18px;padding:8px 14px;border:1px solid #ffffff22;border-radius:20px;background:#ffffff0c;font-size:11px}
+.ref-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:9px 0}.ref-stat{background:linear-gradient(145deg,#10324c,#071b2c);border:1px solid #23526e;border-radius:11px;padding:12px}.ref-stat small{font-size:10px;color:#88a9bc}.ref-stat b{display:block;margin-top:5px;font-size:14px}.green-t{color:#42e28b}.amber-t{color:#ffc04b}
+.ref-panel{background:linear-gradient(145deg,rgba(10,37,59,.96),rgba(4,18,30,.98));border:1px solid #25516b;border-radius:14px;padding:14px;margin:9px 0}.ref-panel-title{font-weight:900;font-size:18px;letter-spacing:1px;margin-bottom:10px}.ref-panel-title span{font-weight:400;font-size:11px;color:#8ca9ba;margin-left:7px}
+.ref-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.ref-q{min-height:78px;border-radius:11px;border:1px solid #ffffff20;color:#fff;text-align:left;padding:12px;font-weight:900;cursor:pointer;box-shadow:inset 0 1px #fff2}.ref-q:hover{transform:translateY(-1px);filter:brightness(1.1)}.rq1{background:#c92e2e}.rq2{background:#bd3038}.rq3{background:#bc7110}.rq4{background:#168253}.rq5{background:#b28b0e}.rq6{background:#1765a2}.rq7{background:#6750a9}.rq8{background:#5a6b7b}
+.ref-bottom{display:grid;grid-template-columns:1fr 1fr;gap:9px}.ref-mini{display:grid;gap:6px}.ref-row{display:flex;justify-content:space-between;background:#ffffff08;border:1px solid #ffffff10;border-radius:8px;padding:9px;font-size:11px}.ref-pill{background:#123d2c;color:#55e696;border-radius:20px;padding:3px 7px;font-size:9px;font-weight:900}
+.ref-footer{height:65px;margin-top:9px;border-top:1px solid #24465c;display:flex;justify-content:space-around;align-items:center;color:#86a5ba;font-size:9px;letter-spacing:.8px}.ref-footer b{display:block;color:#c8dbe7;font-size:16px;text-align:center;margin-bottom:3px}
+@media(max-width:850px){.ref-layout{grid-template-columns:1fr}.ref-side{display:none}.ref-main{padding:8px}.ref-h1{font-size:31px}.ref-stats{grid-template-columns:1fr 1fr}.ref-quick{grid-template-columns:1fr 1fr}.ref-bottom{grid-template-columns:1fr}}
+</style>
+
+<style id="v15-dashboard">
+.v15{min-height:100vh;background:#03101b;color:#eef7ff;font-family:Arial,sans-serif}
+.v15hero{position:relative;min-height:330px;overflow:hidden;padding:25px 22px;background:
+linear-gradient(90deg,#020b14 5%,rgba(2,13,23,.91) 38%,rgba(2,13,23,.22) 100%),
+url("a_high_detail_dashboard_ui_screenshot_for_a_marini.png") center/cover;border-bottom:1px solid #31556d}
+.v15hero:before{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,#ff6b35,#f5bd45,#3fbfff,#42df91)}
+.v15top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+.v15brand{font-size:11px;font-weight:900;letter-spacing:2px}.v15brand span{display:block;color:#78a1b8;font-size:8px;letter-spacing:1px;margin-top:4px}
+.v15clock{font-size:10px;color:#b8d0df;text-align:right}
+.v15center{position:relative;z-index:2;margin-top:55px}.v15eyebrow{font-size:10px;color:#83c8ee;letter-spacing:3px;font-weight:900}.v15name{font-size:44px;line-height:1;font-weight:950;letter-spacing:1px;margin:8px 0}.v15sub{font-size:12px;letter-spacing:4px;color:#aac3d2}.v15desc{margin-top:18px;color:#d3e3ed;font-size:11px;max-width:430px;line-height:1.5}
+.v15status{display:inline-flex;gap:8px;align-items:center;margin-top:15px;padding:8px 12px;border:1px solid #ffffff25;background:#ffffff0c;border-radius:30px;font-size:10px}.v15dot{width:7px;height:7px;background:#43df8e;border-radius:50%;box-shadow:0 0 10px #43df8e}
+.v15body{padding:12px 14px;background:linear-gradient(#061827,#03101a)}
+.v15kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:-30px;position:relative;z-index:3}.v15kpi{background:linear-gradient(145deg,#12334b,#071a2b);border:1px solid #2b5c78;border-radius:13px;padding:12px;box-shadow:0 10px 25px #0006}.v15kpi small{font-size:8px;color:#83a9bd;letter-spacing:1px}.v15kpi b{display:block;margin-top:5px;font-size:18px}.v15green{color:#4be394}
+.v15section{font-size:11px;font-weight:900;letter-spacing:1.5px;color:#a9c6d6;margin:17px 2px 8px}
+.v15grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.v15card{border-radius:14px;min-height:88px;padding:12px;color:white;border:1px solid #ffffff20;box-shadow:0 8px 20px #0004;cursor:pointer;text-align:left}.v15card:hover{transform:translateY(-2px);filter:brightness(1.08)}.v15num{font-size:9px;opacity:.7}.v15ct{font-weight:950;font-size:12px;margin-top:8px;line-height:1.2}.v15cf{font-size:8px;opacity:.75;margin-top:6px}
+.v15card:nth-child(4n+1){background:linear-gradient(145deg,#0c4b82,#0b2d53)}.v15card:nth-child(4n+2){background:linear-gradient(145deg,#a52b31,#621a26)}.v15card:nth-child(4n+3){background:linear-gradient(145deg,#087452,#064532)}.v15card:nth-child(4n+4){background:linear-gradient(145deg,#8a650d,#4c3808)}
+.v15cols{display:grid;grid-template-columns:1.2fr .8fr;gap:10px;margin-top:10px}.v15panel{background:#071d2d;border:1px solid #23475e;border-radius:14px;padding:13px}.v15panel h3{font-size:12px;margin:0 0 10px;letter-spacing:1px}.v15row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #ffffff0d;font-size:10px}.v15row:last-child{border-bottom:0}.v15pill{font-size:8px;padding:4px 7px;border-radius:20px;background:#103b2d;color:#50df95;font-weight:900}
+.v15bottom{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.v15action{border:1px solid #315a70;background:#0a2639;color:#d8eaf4;border-radius:10px;padding:10px;font-size:9px;font-weight:900;cursor:pointer}.v15action:hover{background:#124365}
+@media(max-width:800px){.v15grid{grid-template-columns:repeat(2,1fr)}.v15kpis{grid-template-columns:1fr 1fr}.v15cols{grid-template-columns:1fr}.v15name{font-size:34px}}
+@media(max-width:480px){.v15hero{min-height:290px;padding:18px}.v15center{margin-top:45px}.v15name{font-size:29px}.v15sub{font-size:9px;letter-spacing:2px}.v15body{padding:10px}.v15grid{gap:7px}.v15card{min-height:84px;padding:10px}}
+</style>
+
+<style id="v16">
+.v16bar{display:flex;gap:7px;align-items:center;justify-content:space-between;background:#061a2b;border:1px solid #21475f;border-radius:13px;padding:9px 11px;margin-bottom:9px}
+.v16bar button{border:1px solid #315a70;background:#0a2639;color:#d9edf8;border-radius:9px;padding:8px 10px;font-size:10px;font-weight:900}
+.v16title{font-weight:950;font-size:12px;letter-spacing:1px}
+.v16mode{font-size:9px;color:#5de29b}
+.v16steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:9px 0}
+.v16step{background:#0b2638;border:1px solid #28536b;border-radius:9px;padding:8px;text-align:center;color:#8ea9ba;font-size:8px}.v16step.active{background:#0f4b70;color:#fff;border-color:#42bdf5}.v16step.done{background:#0d5a3c;color:#fff;border-color:#35d58d}
+.v16timer{font-size:34px;font-weight:950;letter-spacing:2px;text-align:center;padding:12px;color:#fff}
+.v16check{display:flex;align-items:flex-start;gap:9px;padding:10px;border-bottom:1px solid #ffffff10;font-size:10px}.v16check input{accent-color:#36d68a;width:18px;height:18px}.v16check small{display:block;color:#7f9bad;margin-top:3px}
+.v16note{width:100%;min-height:90px;background:#061725;color:#e8f5fc;border:1px solid #31566b;border-radius:10px;padding:10px;box-sizing:border-box}
+.v16danger{background:#7c2028!important;border-color:#b33b43!important}
+@media(max-width:600px){.v16steps{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">⚓</div><div><h1>CSM WYVERN</h1><div class="sub">EMERGENCY DRILL MANAGEMENT</div></div></div>
+</header>
+
+<section class="pro-dashboard" id="dashboard">
+  <div class="dash-top">
+    <div>
+      <div class="eyebrow">CSM WYVERN • MARINE SAFETY SYSTEM</div>
+      <h2>Emergency Drill Dashboard</h2>
+      <p>Plan, execute and record shipboard emergency drills in one place.</p>
+    </div>
+    <div class="ship-status"><span class="pulse"></span> VESSEL ONLINE</div>
+  </div>
+
+  <div class="dash-actions">
+    <button onclick="document.getElementById('drill').focus();window.scrollTo({top:document.getElementById('drill').getBoundingClientRect().top+scrollY-100,behavior:'smooth'})">＋ NEW DRILL</button>
+    <button onclick="document.getElementById('crewList').scrollIntoView({behavior:'smooth'})">👥 CREW</button>
+    <button onclick="window.print()">▣ REPORT</button>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat"><span class="stat-icon">🚨</span><div><b>11</b><small>DRILL TYPES</small></div></div>
+    <div class="stat"><span class="stat-icon">👥</span><div><b>13</b><small>CREW MEMBERS</small></div></div>
+    <div class="stat"><span class="stat-icon">📅</span><div><b id="dashMonth">—</b><small>THIS MONTH</small></div></div>
+    <div class="stat"><span class="stat-icon">✓</span><div><b id="dashStatus">READY</b><small>DRILL STATUS</small></div></div>
+  </div>
+
+  <div class="dash-grid">
+    <div class="dash-panel">
+      <div class="panel-head"><span>QUICK START</span><span>SELECT</span></div>
+      <div id="quickDrills" class="quick-grid"></div>
+    </div>
+    <div class="dash-panel">
+      <div class="panel-head"><span>CREW COMMAND</span><span>13 ON BOARD</span></div>
+      <div class="crew-mini">
+        <div><b>Master</b><span>Winda Agusismaya</span></div>
+        <div><b>2nd Master</b><span>Fahrozi</span></div>
+        <div><b>Chief Officer</b><span>Dede Buche Iskandar</span></div>
+        <div><b>Engineering</b><span>Wari Siswoyo • Muchammad Syahid • Arpan</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash-panel schedule-panel">
+    <div class="panel-head"><span>ANNUAL DRILL CONTROL</span><span>2026</span></div>
+    <div class="schedule-strip">
+      <div><b>MONTHLY</b><span>Fire • Abandon Ship</span></div>
+      <div><b>QUARTERLY</b><span>MOB • Oil Spill</span></div>
+      <div><b>3-MONTHLY</b><span>Emergency Steering • ISPS</span></div>
+      <div><b>6-MONTHLY</b><span>GMDSS • FRC • Medical • Engine Room</span></div>
+      <div><b>2-MONTHLY</b><span>Enclosed Space</span></div>
+    </div>
+  </div>
+</section>
+<main>
+<section class="card" style="padding:10px"><div class="actions"><button class="primary" onclick="showPage('drillPage')">🚨 DRILL</button><button class="ghost" onclick="showPage('schedulePage')">📅 SCHEDULE</button><button class="ghost" onclick="showPage('crewPage')">👥 CREW</button></div></section>
+<section id="drillPage">
+<section class="card">
+ <div class="title">1. Select Drill</div>
+ <div class="grid2">
+  <div><label>Jenis Drill</label><select id="drill"></select></div>
+  <div><label>Scenario</label><input id="scenario" placeholder="Contoh: Fire in Bosun Store"></div>
+  <div><div><label>Tanggal Drill</label><input id="date" type="date"></div></div>
+  <div><div><label>Waktu Drill</label><input id="time" type="time"></div></div>
+ </div>
+ <div style="margin-top:12px" class="actions"><button class="primary" onclick="generate()">Generate Crew Duties</button><button class="green" onclick="openExecution()">▶ START LIVE DRILL</button><button class="ghost" onclick="window.print()">Print</button></div>
+</section>
+
+<section id="result" class="hidden">
+ <section class="card">
+  <div class="title" id="drillTitle"></div>
+  <div id="meta" class="small"></div>
+ </section>
+ <section class="card"><div class="title">Crew — Tugas, Tanggung Jawab & Team</div><div id="crewList"></div></section>
+ <section class="card"><div class="title">Urutan Tindakan</div><div id="steps" class="steps"></div></section>
+ <section class="card"><div class="title">Signal / Alarm & Komunikasi</div><div id="signals"></div></section>
+ <section class="card"><div class="title">Checklist Drill</div><div id="checklist"></div></section>
+ <section class="card">
+   <div class="title">Evaluation / Finding</div>
+   <textarea id="finding" rows="4" placeholder="Finding, deficiency, corrective action..."></textarea>
+   <div style="margin-top:10px" class="actions"><button class="green" onclick="makeReport()">Generate Drill Report</button></div>
+ </section>
+ <section id="reportBox" class="card hidden"><div class="title">Drill Report</div><div id="report" class="report"></div></section>
+</section>
+</section>
+<section id="schedulePage" class="hidden">
+<section class="card"><div class="title">Annual Drill Schedule — CSM WYVERN</div><div class="small">Frequency mengikuti Annual Drill Schedule. Tanggal aktual dapat diisi saat drill dilaksanakan.</div><div id="scheduleTable" style="overflow:auto;margin-top:10px"></div></section>
+<section class="card"><div class="title">Monthly Record</div><div class="small">Centang drill yang sudah dilaksanakan bulan ini. Data tersimpan di perangkat.</div><div id="monthGrid"></div></section>
+</section>
+<section id="crewPage" class="hidden">
+<section class="card"><div class="title">IMO Crew List — CSM WYVERN</div><div class="small">13 crew aktif. 2ND MASTER mengikuti posisi/tugas MASTER. FEBRIYADI sebagai COOK.</div><div id="allCrew"></div></section>
+</section>
+</main>
+
+<script>
+const crew=[
+["WINDA AGUSISMAYA","MASTER"],["FAHROZI","2ND MASTER"],["DEDE BUCHE ISKANDAR","CHIEF OFFICER"],
+["WARI SISWOYO","CHIEF ENGINEER"],["MUCHAMMAD SYAHID ABDULLAH","1ST ENGINEER"],["ARPAN ARDIANSYAH","2ND ENGINEER"],
+["MURDIYONO","BOSUN"],["NORMAN AGUS HARYANTO","ASST. BOSUN"],["ACH HAYRI BUDIYANTO","AB"],["PAJAR AGUSTINO NASIR","AB"],["WAHYU NUR NUGROHO","AB"],["ADI PUTRA JIBRAN","OILER"],["FEBRIYADI","COOK"]
+];
+
+const drills = {
+  "Abandon Ship / Muster Drill": {
+    "frequency": "Monthly",
+    "scenario": "Emergency requiring crew to muster and prepare to abandon ship.",
+    "signals": "General alarm: 7 short blasts + 1 prolonged blast. Abandon ship only on Master’s order.",
+    "steps": [
+      "ALARM",
+      "MUSTER",
+      "HEAD COUNT",
+      "BRIEFING",
+      "RESCUE BOAT PREP",
+      "BOARDING",
+      "LAUNCH / RECOVER",
+      "REPORT"
+    ],
+    "equipment": [
+      "Lifejackets",
+      "Muster List",
+      "Rescue Boat",
+      "First Aid Kit",
+      "VHF",
+      "Paddles / Oars",
+      "Fire Extinguisher"
+    ],
+    "teams": [
+      "COMMAND TEAM",
+      "MUSTER / RESCUE LEADER",
+      "ENGINE ROOM TEAM LEADER",
+      "RESCUE BOAT MACHINERY",
+      "RESCUE BOAT / DAVIT",
+      "DAVIT & LAUNCHING",
+      "RESCUE BOAT CREW",
+      "MUSTER & SAFETY",
+      "ENGINE ROOM SUPPORT"
+    ],
+    "tasks": [
+      [
+        "Take command; sound/confirm alarm; ensure head count; give abandon-ship order when required; coordinate with all teams."
+      ],
+      [
+        "Lead muster; verify lifejackets; check rescue boat readiness; report crew status to Master."
+      ],
+      [
+        "Lead engine-room response; prepare emergency power and machinery; report readiness."
+      ],
+      [
+        "Check rescue-boat engine, fuel, battery and starting readiness; report defects."
+      ],
+      [
+        "Lead davit/rescue-boat preparation; check hooks, wires, painter and launching arrangement."
+      ],
+      [
+        "Assist davit checks, release lashings as permitted, prepare painter/recovery arrangements."
+      ],
+      [
+        "Bring lifejackets/equipment; board only on order; assist boat operation."
+      ],
+      [
+        "Control muster area; verify crew identity/count and safe access."
+      ],
+      [
+        "Support engine-room preparation and stand by for technical assistance."
+      ]
+    ]
+  },
+  "Fire Drill": {
+    "frequency": "Monthly",
+    "scenario": "Simulated fire at a designated shipboard location.",
+    "signals": "Fire alarm: continuous / rapid fire alarm as fitted. General alarm and abandon ship only as ordered.",
+    "steps": [
+      "FIRE DETECTED",
+      "RAISE ALARM",
+      "MUSTER",
+      "FIRE PARTY",
+      "ENGINE ROOM RESPONSE",
+      "COMMUNICATION",
+      "BOUNDARY CONTROL",
+      "REPORT & DEBRIEF"
+    ],
+    "equipment": [
+      "Fire Hose",
+      "Nozzle",
+      "Hydrant",
+      "Portable Extinguisher",
+      "Fireman Outfit / SCBA",
+      "VHF",
+      "Fire Plan"
+    ],
+    "teams": [
+      "COMMAND (BRIDGE)",
+      "FIRE PARTY LEADER",
+      "ENGINE ROOM COMMAND",
+      "ENGINE ROOM TEAM",
+      "FIRE PARTY",
+      "FIRE PARTY",
+      "FIRE PARTY SUPPORT",
+      "FIRE PARTY BACKUP",
+      "BOUNDARY & EVACUATION",
+      "ENGINE ROOM SUPPORT"
+    ],
+    "tasks": [
+      [
+        "Take overall command; confirm alarm and muster; receive fire-party/engine reports; decide further action."
+      ],
+      [
+        "Act as on-scene/fire-party leader; assess simulated fire; direct firefighting and report progress."
+      ],
+      [
+        "Ensure emergency fire pump / machinery readiness; isolate systems as required; report to Master."
+      ],
+      [
+        "Operate fire pump / support ventilation or isolation as instructed; monitor pressure and machinery."
+      ],
+      [
+        "Lead firefighting equipment preparation; deploy hose/nozzle and maintain safe attack position."
+      ],
+      [
+        "Handle hose and support nozzle team; maintain communications and boundary cooling."
+      ],
+      [
+        "Support fire party with equipment; assist hose handling and rescue standby."
+      ],
+      [
+        "Provide backup extinguisher/equipment; assist boundary cooling and relief."
+      ],
+      [
+        "Control access, evacuation route and boundary area; prevent unauthorized entry."
+      ],
+      [
+        "Support machinery/fire pump operation and emergency shutdowns as instructed."
+      ]
+    ]
+  },
+  "Man Overboard Drill": {
+    "frequency": "Quarterly",
+    "scenario": "Crew member is reported fallen overboard from deck.",
+    "signals": "Shout 'MAN OVERBOARD'; alarm/PA as fitted; mark position and maintain continuous lookout.",
+    "steps": [
+      "SPOT",
+      "ALERT",
+      "MARK POSITION",
+      "MANOEUVRE",
+      "LOOKOUT",
+      "RESCUE",
+      "RECOVER",
+      "REPORT"
+    ],
+    "equipment": [
+      "Lifebuoy with Light/Smoke",
+      "Heaving Line",
+      "Rescue Boat",
+      "VHF",
+      "Binoculars",
+      "First Aid Kit"
+    ],
+    "teams": [
+      "COMMAND TEAM",
+      "MOB / RESCUE TEAM LEADER",
+      "ENGINE ROOM COORDINATOR",
+      "ENGINE CONTROL SUPPORT",
+      "RESCUE EQUIPMENT LEADER",
+      "DAVIT & RESCUE TEAM",
+      "LOOKOUT 1",
+      "LOOKOUT 2 / RESCUE",
+      "RESCUE / SAFETY",
+      "ENGINE ROOM SUPPORT"
+    ],
+    "tasks": [
+      [
+        "Take command; ensure alarm/communication; direct manoeuvre; coordinate Bridge and rescue team; authorize recovery."
+      ],
+      [
+        "Lead rescue operation; prepare rescue boat/equipment; coordinate recovery and report progress."
+      ],
+      [
+        "Prepare propulsion/steering; stand by RPM/engine changes; coordinate with Bridge."
+      ],
+      [
+        "Monitor engine during manoeuvre; execute Bridge orders; report machinery status."
+      ],
+      [
+        "Prepare lifebuoy, heaving line, rescue gear and recovery equipment."
+      ],
+      [
+        "Prepare/operate rescue boat or recovery arrangement; ensure recovery area is safe."
+      ],
+      [
+        "Maintain visual contact and continuously point to casualty; report bearing/range."
+      ],
+      [
+        "Assist lookout and rescue preparations; stand by as rescue-boat crew."
+      ],
+      [
+        "Secure recovery area; prepare first aid and casualty handling; prevent unsafe access."
+      ],
+      [
+        "Support engine-room manoeuvring and machinery readiness."
+      ]
+    ]
+  },
+  "Enclosed Space Entry Drill": {
+    "frequency": "2-monthly",
+    "scenario": "Person found unconscious / unresponsive inside an enclosed space.",
+    "signals": "Raise alarm immediately; stop work; emergency communication with Bridge. No entry without permit/procedure.",
+    "steps": [
+      "CASUALTY FOUND",
+      "ALARM & COMMAND",
+      "ISOLATE",
+      "VENTILATE",
+      "GAS TEST",
+      "RESCUE PREP",
+      "RESCUE",
+      "REPORT & DEBRIEF"
+    ],
+    "equipment": [
+      "SCBA",
+      "Harness",
+      "Lifeline",
+      "Tripod / Winch",
+      "Stretcher",
+      "Gas Detector",
+      "Ventilation Fan",
+      "First Aid Kit",
+      "Radio"
+    ],
+    "teams": [
+      "COMMAND",
+      "RESCUE TEAM LEADER",
+      "ENGINE ROOM COORDINATOR",
+      "EQUIPMENT & MACHINERY",
+      "RESCUE EQUIPMENT LEADER",
+      "RESCUE / ENTRY SUPPORT",
+      "SAFETY ATTENDANT",
+      "GAS MONITORING",
+      "BOUNDARY & SAFETY",
+      "TECHNICAL / ENGINE ROOM"
+    ],
+    "tasks": [
+      [
+        "Take command; stop related work; ensure alarm and communications; approve rescue plan and final recovery."
+      ],
+      [
+        "Lead rescue team; confirm permit/Risk Assessment controls; ensure ventilation and safe rescue method."
+      ],
+      [
+        "Coordinate machinery isolation/ventilation and technical support; report status."
+      ],
+      [
+        "Assist isolation of valves/pumps; prepare ventilation and emergency power; monitor equipment."
+      ],
+      [
+        "Prepare SCBA, harness, lifeline, tripod/winch, stretcher and rescue equipment."
+      ],
+      [
+        "Assist harness/lifeline and lowering/raising arrangements; maintain communications."
+      ],
+      [
+        "Stand by at entrance; tend lifeline; control entry and continuously monitor rescue team."
+      ],
+      [
+        "Conduct gas testing as required by procedure; monitor O2 and toxic/flammable atmosphere; report readings."
+      ],
+      [
+        "Secure entrance/boundary; control access and keep rescue route clear."
+      ],
+      [
+        "Support machinery/ventilation and emergency power; assist casualty recovery."
+      ]
+    ]
+  },
+  "GMDSS / Distress Signal Drill": {
+    "frequency": "6-monthly",
+    "scenario": "Simulated distress / emergency communication and GMDSS response.",
+    "signals": "Use simulated distress traffic only. Do not transmit a false distress alert on live equipment.",
+    "steps": [
+      "RECOGNIZE",
+      "ALERT",
+      "GMDSS CHECK",
+      "BRIDGE COMMUNICATION",
+      "DISTRESS PROCEDURE",
+      "LOG",
+      "REPORT & DEBRIEF"
+    ],
+    "equipment": [
+      "VHF DSC",
+      "VHF Radio",
+      "GMDSS Equipment",
+      "EPIRB / SART (training check)",
+      "Batteries",
+      "Logbook"
+    ],
+    "teams": [
+      "COMMAND / BRIDGE",
+      "GMDSS OPERATOR",
+      "ENGINE ROOM COORDINATOR",
+      "TECHNICAL SUPPORT",
+      "DECK SUPPORT",
+      "COMMUNICATION SUPPORT",
+      "LOOKOUT / SAFETY",
+      "RADIO SUPPORT",
+      "LOG / DOCUMENT",
+      "ENGINE ROOM SUPPORT"
+    ],
+    "tasks": [
+      [
+        "Direct emergency communication; decide simulated distress response; ensure no false live distress transmission."
+      ],
+      [
+        "Operate/check GMDSS equipment according to procedure; prepare correct message and report status."
+      ],
+      [
+        "Maintain machinery/electrical readiness and emergency power support."
+      ],
+      [
+        "Check technical condition and power supply of communication equipment as assigned."
+      ],
+      [
+        "Support Bridge with ship position, equipment and visual information."
+      ],
+      [
+        "Maintain reliable internal/external communication and read-back."
+      ],
+      [
+        "Maintain safety around Bridge/antenna/equipment areas."
+      ],
+      [
+        "Assist radio watch and communication logging."
+      ],
+      [
+        "Record times, messages, equipment checks and drill observations."
+      ],
+      [
+        "Support emergency electrical power and machinery readiness."
+      ]
+    ]
+  },
+  "FRC Swinging-Out Drill": {
+    "frequency": "6-monthly",
+    "scenario": "Simulated preparation and controlled swinging-out of Fast Rescue Craft.",
+    "signals": "General emergency signal as applicable; launch only under Master’s/authorized officer’s instruction.",
+    "steps": [
+      "BRIEFING",
+      "EQUIPMENT CHECK",
+      "DAVIT CHECK",
+      "SWING OUT",
+      "COMMUNICATION",
+      "RECOVER",
+      "SECURE",
+      "REPORT"
+    ],
+    "equipment": [
+      "FRC",
+      "Davit",
+      "Falls / Wires",
+      "Hooks",
+      "Painter",
+      "Lifejackets",
+      "VHF",
+      "PPE"
+    ],
+    "teams": [
+      "COMMAND",
+      "FRC TEAM LEADER",
+      "ENGINE ROOM",
+      "DAVIT / MACHINERY",
+      "DAVIT OPERATOR",
+      "DECK LAUNCH TEAM",
+      "FRC CREW",
+      "SAFETY WATCH",
+      "DECK SUPPORT",
+      "ENGINE ROOM SUPPORT"
+    ],
+    "tasks": [
+      [
+        "Authorize and control drill; confirm weather/sea conditions and safe limits; ensure communication."
+      ],
+      [
+        "Lead FRC team; verify crew/equipment and launching arrangement."
+      ],
+      [
+        "Ensure power/hydraulic systems supporting davit are ready and monitored."
+      ],
+      [
+        "Inspect davit machinery, brakes, falls and hydraulic/power systems."
+      ],
+      [
+        "Operate davit controls as authorized and maintain clear communication."
+      ],
+      [
+        "Prepare painter, securing/lashing and launching area; keep personnel clear."
+      ],
+      [
+        "Prepare FRC and safety equipment; board only when instructed."
+      ],
+      [
+        "Maintain exclusion zone and stop operation if unsafe condition develops."
+      ],
+      [
+        "Support deck preparation and recovery/securing operations."
+      ],
+      [
+        "Support power/hydraulic systems and report abnormalities."
+      ]
+    ]
+  },
+  "Emergency Steering Drill": {
+    "frequency": "3-monthly",
+    "scenario": "Main steering system failure; transfer to emergency/local steering control.",
+    "signals": "Bridge emergency steering communication; use internal radio/telephone and repeat-back.",
+    "steps": [
+      "STEERING FAILURE",
+      "INFORM ENGINE ROOM",
+      "CHANGE TO LOCAL CONTROL",
+      "COMMUNICATION TEST",
+      "STEER",
+      "REPORT"
+    ],
+    "equipment": [
+      "Steering Gear",
+      "Local/Emergency Control",
+      "VHF/UHF / Telephone",
+      "Hand Signals",
+      "Emergency Power"
+    ],
+    "teams": [
+      "COMMAND TEAM",
+      "BRIDGE TEAM LEADER",
+      "STEERING GEAR TEAM LEADER",
+      "STEERING GEAR OPERATOR",
+      "COMMUNICATION / DECK",
+      "STEERING GEAR SUPPORT",
+      "COMMUNICATION RUNNER",
+      "EMERGENCY STEERING SUPPORT",
+      "SAFETY & ACCESS",
+      "TECHNICAL SUPPORT"
+    ],
+    "tasks": [
+      [
+        "Take command; assess failure; order emergency steering; ensure communication and monitor vessel safety."
+      ],
+      [
+        "Coordinate steering orders from Bridge; monitor compass/rudder indication; maintain read-back."
+      ],
+      [
+        "Lead steering gear-room team; ensure power unit and local control are ready."
+      ],
+      [
+        "Operate local/direct steering control; follow Bridge orders; monitor hydraulic pressure and rudder movement."
+      ],
+      [
+        "Stand by near steering gear; relay orders and support emergency response."
+      ],
+      [
+        "Assist checks of steering gear and equipment; report abnormalities."
+      ],
+      [
+        "Maintain reliable communication between Bridge and steering gear room."
+      ],
+      [
+        "Assist local steering operation and emergency equipment."
+      ],
+      [
+        "Control access to steering gear room and maintain safe working area."
+      ],
+      [
+        "Support hydraulic/power equipment and technical troubleshooting."
+      ]
+    ]
+  },
+  "Oil / Chemical Spill (SOPEP)": {
+    "frequency": "Quarterly",
+    "scenario": "Simulated oil/chemical spill on deck or cargo manifold area.",
+    "signals": "Raise spill alarm/communication as per SOPEP and vessel SMS. Prevent discharge to sea.",
+    "steps": [
+      "DETECT SPILL",
+      "STOP SOURCE",
+      "PROTECT SEA",
+      "CONTAIN",
+      "RECOVER",
+      "REPORT",
+      "DEBRIEF"
+    ],
+    "equipment": [
+      "Oil Boom",
+      "Absorbent Pads",
+      "Sawdust",
+      "Bucket / Scoop",
+      "Closing Plug",
+      "Waste Bags",
+      "SOPEP Kit"
+    ],
+    "teams": [
+      "COMMAND TEAM",
+      "SPILL TEAM LEADER",
+      "ENGINE ROOM COORDINATOR",
+      "PUMP & MACHINERY",
+      "SOPEP EQUIPMENT LEADER",
+      "CONTAINMENT TEAM",
+      "SPILL RESPONSE",
+      "RECOVERY TEAM",
+      "DECK SAFETY",
+      "ENGINE ROOM SUPPORT"
+    ],
+    "tasks": [
+      [
+        "Take command; stop operations as needed; coordinate SOPEP response and external reporting when applicable."
+      ],
+      [
+        "Identify source and area; direct containment; coordinate SOPEP equipment and report status."
+      ],
+      [
+        "Prepare/coordinate machinery isolation and emergency support systems."
+      ],
+      [
+        "Operate/isolate pumps, valves and related machinery to stop or reduce source."
+      ],
+      [
+        "Lead SOPEP equipment preparation and deployment."
+      ],
+      [
+        "Deploy oil boom/containment; protect scuppers and prevent spread."
+      ],
+      [
+        "Bring absorbents; close scuppers/drains; clean and control spill area."
+      ],
+      [
+        "Collect contaminated materials and place in designated containers."
+      ],
+      [
+        "Secure area; remove ignition sources where relevant; control access."
+      ],
+      [
+        "Support fuel/oil system isolation and pump operations."
+      ]
+    ]
+  },
+  "Security Drill (ISPS)": {
+    "frequency": "3-monthly",
+    "scenario": "Simulated security threat / unauthorized access attempt.",
+    "signals": "Security alert and internal communication according to Ship Security Plan (SSP).",
+    "steps": [
+      "DETECT",
+      "ALERT SSO",
+      "SECURE ACCESS",
+      "SEARCH / CONTROL",
+      "COMMUNICATE",
+      "MUSTER IF REQUIRED",
+      "REPORT"
+    ],
+    "equipment": [
+      "VHF",
+      "Access Control Log",
+      "Visitor Log",
+      "Search Equipment",
+      "Flashlights",
+      "PPE"
+    ],
+    "teams": [
+      "MASTER / COMMAND",
+      "SSO / DECK LEADER",
+      "ENGINE ROOM SECURITY",
+      "ENGINE SUPPORT",
+      "ACCESS CONTROL",
+      "SEARCH TEAM",
+      "GANGWAY WATCH",
+      "PATROL / SUPPORT",
+      "SAFETY TEAM",
+      "TECHNICAL SUPPORT"
+    ],
+    "tasks": [
+      [
+        "Overall command and coordination; ensure SSP measures are applied and notify relevant parties as required."
+      ],
+      [
+        "Act as SSO/security leader; assess threat; control access and direct security team."
+      ],
+      [
+        "Maintain engine-room security and restrict unauthorized access."
+      ],
+      [
+        "Support machinery/equipment security and emergency systems."
+      ],
+      [
+        "Control gangway/access point, verify identification and visitor records."
+      ],
+      [
+        "Conduct authorized search/control actions according to SSP."
+      ],
+      [
+        "Maintain gangway watch and immediately report suspicious activity."
+      ],
+      [
+        "Patrol/support restricted areas and maintain communications."
+      ],
+      [
+        "Maintain safe conduct and assist muster/evacuation if required."
+      ],
+      [
+        "Support security of technical spaces and equipment."
+      ]
+    ]
+  },
+  "Medical Emergency Drill": {
+    "frequency": "6-monthly",
+    "scenario": "Simulated serious injury or medical emergency requiring first aid and evacuation/medical advice.",
+    "signals": "Emergency call to Bridge; use internal communication and medical response procedure.",
+    "steps": [
+      "DISCOVER",
+      "ALERT",
+      "ASSESS",
+      "FIRST AID",
+      "MEDICAL ADVICE",
+      "EVACUATION / RECOVERY",
+      "REPORT"
+    ],
+    "equipment": [
+      "First Aid Kit",
+      "Stretcher",
+      "AED if fitted",
+      "Oxygen if fitted",
+      "PPE",
+      "VHF"
+    ],
+    "teams": [
+      "MASTER / COMMAND",
+      "MEDICAL TEAM LEADER",
+      "ENGINE ROOM",
+      "TECHNICAL SUPPORT",
+      "FIRST AID EQUIPMENT",
+      "STRETCHER TEAM",
+      "FIRST AIDER",
+      "COMMUNICATION",
+      "SAFETY / ACCESS",
+      "ENGINE SUPPORT"
+    ],
+    "tasks": [
+      [
+        "Take command; coordinate medical response, communications and shore assistance/evacuation if required."
+      ],
+      [
+        "Lead first-aid response; assess casualty; organize treatment and report condition."
+      ],
+      [
+        "Ensure machinery/area safety and isolate hazards."
+      ],
+      [
+        "Support power, ventilation or technical requirements for casualty care."
+      ],
+      [
+        "Prepare first-aid kit, oxygen/AED if fitted, PPE and medical supplies."
+      ],
+      [
+        "Prepare stretcher and safe casualty movement route."
+      ],
+      [
+        "Provide first aid within training/competence and monitor casualty."
+      ],
+      [
+        "Maintain communication with Bridge/medical advice provider."
+      ],
+      [
+        "Control access and keep casualty route clear."
+      ],
+      [
+        "Support technical systems and emergency power as required."
+      ]
+    ]
+  },
+  "Engine Room Emergency Drill": {
+    "frequency": "6-monthly",
+    "scenario": "Simulated engine-room emergency such as machinery failure, flooding, blackout or fire response.",
+    "signals": "Engine-room emergency alarm and Bridge communication according to SMS.",
+    "steps": [
+      "DETECT",
+      "ALARM",
+      "ASSESS",
+      "ISOLATE",
+      "EMERGENCY POWER",
+      "CONTROL",
+      "COMMUNICATE",
+      "REPORT"
+    ],
+    "equipment": [
+      "Emergency Fire Pump",
+      "Emergency Generator",
+      "Bilge Pump",
+      "Portable Extinguisher",
+      "SCBA if required",
+      "VHF",
+      "PPE"
+    ],
+    "teams": [
+      "MASTER / BRIDGE",
+      "CHIEF ENGINEER / ER COMMAND",
+      "ENGINE ROOM TEAM",
+      "1ST / 2ND ENGINEER",
+      "TECHNICAL TEAM",
+      "DECK SUPPORT",
+      "SAFETY WATCH",
+      "COMMUNICATION",
+      "OILER / SUPPORT",
+      "COOK / CREW SUPPORT"
+    ],
+    "tasks": [
+      [
+        "Coordinate overall emergency response from Bridge and receive Engine Room status reports."
+      ],
+      [
+        "Take command in Engine Room; assess emergency, isolate systems and report to Master."
+      ],
+      [
+        "Operate/monitor assigned machinery and emergency systems according to scenario."
+      ],
+      [
+        "Execute machinery isolation, emergency pump/power actions and report condition."
+      ],
+      [
+        "Prepare tools/spares and technical assistance; monitor equipment."
+      ],
+      [
+        "Assist with boundary/access control and emergency support from deck."
+      ],
+      [
+        "Maintain safe access and prevent unauthorized entry to affected area."
+      ],
+      [
+        "Maintain reliable Bridge–Engine Room communication and repeat-back."
+      ],
+      [
+        "Assist engineers with machinery monitoring, lubrication/fuel and emergency support."
+      ],
+      [
+        "Remain in safe assigned area; support crew welfare and supplies; follow Master/CO instructions."
+      ]
+    ]
+  }
+};
+
+const drillSel=document.getElementById("drill");
+Object.keys(drills).forEach(k=>{let o=document.createElement("option");o.value=k;o.textContent=k;drillSel.appendChild(o)});
+document.getElementById("date").value=new Date().toISOString().slice(0,10);
+
+function showPage(id){
+ document.querySelectorAll('main > section[id]').forEach(x=>x.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+ if(id==='schedulePage') renderSchedule();
+ if(id==='crewPage') renderAllCrew();
+}
+const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+function renderSchedule(){
+ const rows=Object.entries(drills).map(([name,d])=>`<tr><td>${name}</td><td>${d.freq}</td>${months.map(m=>`<td><input type="checkbox" data-drill="${name}" data-month="${m}" onchange="saveSchedule(this)"></td>`).join('')}</tr>`).join('');
+ document.getElementById('scheduleTable').innerHTML=`<table style="width:100%;border-collapse:collapse;font-size:12px"><tr style="background:#12366d;color:white"><th style="padding:8px;text-align:left">DRILL TYPE</th><th>FREQUENCY</th>${months.map(m=>`<th>${m}</th>`).join('')}</tr>${rows}</table>`;
+ const saved=JSON.parse(localStorage.getItem('csmDrillSchedule')||'{}');
+ document.querySelectorAll('#scheduleTable input').forEach(cb=>{cb.checked=!!saved[cb.dataset.drill+'|'+cb.dataset.month]});
+ const now=months[new Date().getMonth()];
+ document.getElementById('monthGrid').innerHTML=`<div class="badge">Current month: ${now}</div><div style="margin-top:10px">${Object.keys(drills).map(n=>`<label style="font-weight:400"><input type="checkbox" style="width:auto;margin-right:8px" data-monthcheck="${n}|${now}"> ${n}</label>`).join('')}</div>`;
+ const ms=JSON.parse(localStorage.getItem('csmMonthRecord')||'{}'); document.querySelectorAll('[data-monthcheck]').forEach(x=>x.checked=!!ms[x.dataset.monthcheck]);
+ document.querySelectorAll('[data-monthcheck]').forEach(x=>x.onchange=()=>{const a=JSON.parse(localStorage.getItem('csmMonthRecord')||'{}'); if(x.checked)a[x.dataset.monthcheck]=true;else delete a[x.dataset.monthcheck]; localStorage.setItem('csmMonthRecord',JSON.stringify(a));});
+}
+function saveSchedule(cb){const a=JSON.parse(localStorage.getItem('csmDrillSchedule')||'{}');const k=cb.dataset.drill+'|'+cb.dataset.month;if(cb.checked)a[k]=true;else delete a[k];localStorage.setItem('csmDrillSchedule',JSON.stringify(a));}
+function renderAllCrew(){
+ document.getElementById('allCrew').innerHTML=crew.map((c,i)=>{let note=c[1]==='2ND MASTER'?'Same position & duties as MASTER':c[1]==='1ST ENGINEER'?'Engineering support / emergency duties':'Assigned according to drill';return `<div class="crew"><div class="crewtop"><div class="num">${i+1}</div><div><div class="name">${c[0]}</div><div class="rank">${c[1]}</div></div><div class="team">${note}</div></div></div>`}).join('');
+}
+
+function generate(){
+ const d=drills[drillSel.value]; document.getElementById("result").classList.remove("hidden");
+ document.getElementById("drillTitle").textContent=drillSel.value;
+ document.getElementById("meta").textContent=`Frequency: ${d.freq}  •  Scenario: ${document.getElementById("scenario").value||d.scenario}`;
+ const cl=document.getElementById("crewList");cl.innerHTML="";
+ crew.forEach((c,i)=>{
+   // Expanded 12-person crew: 2nd Master mirrors Master duties/position;
+   // 1st Engineer uses the same emergency engineering function as the 2nd Engineer.
+   const sourceIndex = (i===0 || i===1) ? 0 : (i===2 ? 1 : (i===3 ? 2 : (i===4 || i===5 ? 3 : i-2)));
+   const div=document.createElement("div");div.className="crew";
+   const isCook=c[1]==="COOK";
+   const cookTeam="GALLEY / CREW SUPPORT";
+   const cookTasks=["Prepare drinking water/refreshments and support crew welfare as required.","Remain available at the assigned safe area and follow Master/Chief Officer instructions.","Assist with emergency supplies or other non-operational support when requested.","Do not enter hazardous areas unless specifically authorized and safe to do so."];
+   const teamName=isCook?cookTeam:d.teams[sourceIndex];
+   const taskList=isCook?cookTasks:d.tasks[sourceIndex];
+   div.innerHTML=`<div class="crewtop"><div class="num">${i+1}</div><div><div class="name">${c[0]}</div><div class="rank">${c[1]}</div></div><div class="team">${teamName}</div></div><div class="tasks"><ul>${taskList.map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
+   cl.appendChild(div);
+ });
+ document.getElementById("steps").innerHTML=d.steps.map((x,i)=>`<div class="step"><b>${i+1}</b>${x}</div>`).join("");
+ document.getElementById("signals").innerHTML=`<div class="signal">🚨 <b>Signal / Alarm:</b> ${d.signals}</div>`;
+ document.getElementById("checklist").innerHTML=["Master informed / command established","Crew muster and head count completed","Assigned team/positions confirmed","Communication tested and understood","Required emergency equipment checked","Drill conducted safely according to SMS","Finding / deficiency recorded","Debrief completed","Equipment restored after drill","Official logbook entry completed"].map(x=>`<label style="font-weight:400"><input type="checkbox" style="width:auto;margin-right:8px"> ${x}</label>`).join("");
+ window.scrollTo({top:document.getElementById("result").offsetTop-10,behavior:"smooth"});
+}
+function makeReport(){
+ const d=drills[drillSel.value], date=document.getElementById("date").value, time=document.getElementById("time").value||"____";
+ const finding=document.getElementById("finding").value||"No finding recorded.";
+ const report=`CSM WYVERN — EMERGENCY DRILL REPORT
+
+Drill Type: ${drillSel.value}
+Date: ${date}
+Time: ${time}
+Scenario: ${document.getElementById("scenario").value||d.scenario}
+
+CREW / ASSIGNMENTS
+${crew.map((c,i)=>{const sourceIndex=(i===0||i===1)?0:(i===2?1:(i===3?2:(i===4||i===5?3:i-2))); const team=c[1]==="COOK"?"GALLEY / CREW SUPPORT":d.teams[sourceIndex]; return `${i+1}. ${c[0]} — ${c[1]} — ${team}`}).join("\n")}
+
+SIGNAL / COMMUNICATION
+${d.signals}
+
+SEQUENCE
+${d.steps.map((x,i)=>`${i+1}. ${x}`).join("\n")}
+
+FINDING / DEFICIENCY / CORRECTIVE ACTION
+${finding}
+
+STATUS: Drill completed / to be reviewed by Master
+`;
+ document.getElementById("reportBox").classList.remove("hidden");document.getElementById("report").textContent=report;
+}
+</script>
+
+<script>
+(function(){
+ const q=document.getElementById('quickDrills');
+ if(!q)return;
+ const icons={"Fire Drill":"🔥","Man Overboard Drill":"🌊","Enclosed Space Entry Drill":"🧯","Emergency Steering Drill":"⚓","Oil / Chemical Spill (SOPEP) Drill":"🛢️","Abandon Ship / Muster Drill":"🛟","GMDSS / Distress Signal Drill":"📡","FRC Swinging-Out Drill":"🚤","Security Drill (ISPS)":"🔐","Medical Emergency Drill":"🏥","Engine Room Emergency Drill":"⚙️"};
+ Object.keys(drills).slice(0,8).forEach(k=>{
+   const b=document.createElement('button');b.innerHTML=(icons[k]||'🚨')+' '+k;
+   b.onclick=()=>{document.getElementById('drill').value=k;generate();};
+   q.appendChild(b);
+ });
+ const m=new Date().toLocaleString('en-US',{month:'short'}).toUpperCase();
+ document.getElementById('dashMonth').textContent=m;
+ const oldGenerate=window.generate;
+ window.generate=function(){oldGenerate();document.getElementById('dashStatus').textContent='ACTIVE';};
+})();
+</script>
+
+<nav class="bottom-nav">
+ <button onclick="showApp('home')">⌂<span>HOME</span></button>
+ <button onclick="showApp('schedule')">▣<span>SCHEDULE</span></button>
+ <button class="start" onclick="showApp('drill')">＋<span>START DRILL</span></button>
+ <button onclick="showApp('crew')">♟<span>CREW</span></button>
+ <button onclick="showApp('reports')">☰<span>REPORTS</span></button>
+</nav>
+<section id="appPages" class="app-pages">
+ <div id="page-home" class="app-page"></div>
+ <div id="page-schedule" class="app-page hidden"></div>
+ <div id="page-drill" class="app-page hidden">
+  <div class="card">
+   <div class="title">LIVE DRILL CONTROL</div>
+   <div class="timer" id="liveTimer">00:00:00</div>
+   <div class="actions"><button class="green" onclick="startTimer()">▶ START</button><button class="danger" onclick="stopTimer()">■ STOP</button><button class="ghost" onclick="resetTimer()">↻ RESET</button></div>
+  </div>
+ </div>
+ <div id="page-crew" class="app-page hidden"></div>
+ <div id="page-reports" class="app-page hidden">
+  <div class="card"><div class="title">REPORT CENTER</div><p class="small">Generate the current drill report from the selected drill, crew assignments, checklist and findings.</p><button class="primary" onclick="generate();makeReport();showApp('drill');">CREATE FINAL REPORT</button></div>
+ </div>
+</section>
+
+<style>
+body{padding-bottom:78px}.bottom-nav{position:fixed;z-index:99;bottom:0;left:0;right:0;max-width:900px;margin:auto;height:68px;background:#071a35f5;backdrop-filter:blur(12px);display:grid;grid-template-columns:repeat(5,1fr);border-radius:18px 18px 0 0;box-shadow:0 -8px 25px #0002}.bottom-nav button{background:transparent;color:#b9c9dc;border:0;font-size:18px;padding:7px 2px}.bottom-nav span{display:block;font-size:8px;letter-spacing:.5px;margin-top:3px}.bottom-nav .start{background:#fff;color:#0b315d;margin:8px 4px;border-radius:12px;font-size:16px}.timer{font-size:42px;text-align:center;font-weight:900;letter-spacing:2px;color:#12366d;padding:12px 0}.app-pages{max-width:900px;margin:auto}.app-page{margin-top:12px}
+</style>
+
+<script>
+let timerSeconds=0,timerInt=null;
+function showApp(page){
+ document.querySelectorAll('.app-page').forEach(x=>x.classList.add('hidden'));
+ const p=document.getElementById('page-'+page); if(p)p.classList.remove('hidden');
+ if(page==='home') document.getElementById('page-home').innerHTML=document.getElementById('dashboard').outerHTML;
+ if(page==='schedule') document.getElementById('page-schedule').innerHTML='<div class="card"><div class="title">ANNUAL DRILL SCHEDULE</div><div class="schedule-strip"><div><b>MONTHLY</b><span>Fire • Abandon Ship</span></div><div><b>QUARTERLY</b><span>MOB • Oil Spill</span></div><div><b>3-MONTHLY</b><span>Emergency Steering • ISPS</span></div><div><b>6-MONTHLY</b><span>GMDSS • FRC • Medical • Engine Room</span></div><div><b>2-MONTHLY</b><span>Enclosed Space</span></div></div></div>';
+ if(page==='crew') document.getElementById('page-crew').innerHTML='<div class="card"><div class="title">CREW DATABASE</div>'+crew.map((c,i)=>`<div style="padding:9px;border-bottom:1px solid #edf1f5"><b>${i+1}. ${c[0]}</b><div class="small">${c[1]}</div></div>`).join('')+'</div>';
+ if(page==='drill') document.getElementById('page-drill').classList.remove('hidden');
+}
+function tick(){timerSeconds++;let h=String(Math.floor(timerSeconds/3600)).padStart(2,'0'),m=String(Math.floor(timerSeconds%3600/60)).padStart(2,'0'),s=String(timerSeconds%60).padStart(2,'0');document.getElementById('liveTimer').textContent=`${h}:${m}:${s}`;}
+function startTimer(){if(!timerInt)timerInt=setInterval(tick,1000);document.getElementById('dashStatus').textContent='ACTIVE';}
+function stopTimer(){clearInterval(timerInt);timerInt=null;document.getElementById('dashStatus').textContent='STOPPED';}
+function resetTimer(){stopTimer();timerSeconds=0;document.getElementById('liveTimer').textContent='00:00:00';}
+showApp('home');
+</script>
+
+<style>
+.assignment-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.assign-row{border:1px solid #dfe6ef;border-radius:12px;padding:10px;background:#fbfcfe}
+.assign-row label{margin:0 0 5px}.assign-row select{padding:9px;font-size:13px}
+.onboard{accent-color:#12366d}
+@media(max-width:650px){.assignment-grid{grid-template-columns:1fr}}
+</style>
+<script>
+let assignments=crew.map(c=>({name:c[0],rank:c[1],onboard:true}));
+function renderCrewPage(){
+ const box=document.getElementById('page-crew');
+ box.innerHTML=`<div class="card"><div class="title">CREW ASSIGNMENT</div>
+ <p class="small">Tick ON BOARD and select the operational role. Duties are generated from the selected drill and assigned role.</p>
+ <div class="assignment-grid">${assignments.map((a,i)=>`
+ <div class="assign-row">
+   <label><input class="onboard" type="checkbox" ${a.onboard?'checked':''} onchange="assignments[${i}].onboard=this.checked"> ${a.name}</label>
+   <div class="small">${a.rank}</div>
+   <select onchange="assignments[${i].rank=this.value">
+     ${[...new Set(crew.map(x=>x[1]))].map(r=>`<option ${r===a.rank?'selected':''}>${r}</option>`).join('')}
+   </select>
+ </div>`).join('')}</div>
+ <div class="actions" style="margin-top:12px"><button class="primary" onclick="saveAssignments()">SAVE ASSIGNMENT</button><button class="ghost" onclick="selectAllCrew(true)">ALL ON BOARD</button><button class="ghost" onclick="selectAllCrew(false)">CLEAR</button></div>
+ <div id="assignMsg" class="small" style="margin-top:8px"></div></div>`;
+}
+function selectAllCrew(v){assignments.forEach(a=>a.onboard=v);renderCrewPage();}
+function saveAssignments(){localStorage.setItem('csmCrewAssignments',JSON.stringify(assignments));document.getElementById('assignMsg').textContent='✓ Crew assignment saved on this device.';}
+function loadAssignments(){try{let x=JSON.parse(localStorage.getItem('csmCrewAssignments'));if(Array.isArray(x))assignments=x}catch(e){}}
+const oldShowApp=showApp;
+showApp=function(page){
+ oldShowApp(page);
+ if(page==='crew'){loadAssignments();renderCrewPage();}
+};
+</script>
+
+<style>
+.exec-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}
+.progress{height:9px;background:#e8edf4;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:#16804b;transition:.25s}
+.task-row{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid #e2e7ee;border-radius:11px;margin:7px 0;background:#fff}.task-row input{width:18px;margin-top:2px}.task-row.done{background:#eff9f3}.task-row.done .task-text{text-decoration:line-through;color:#668070}
+.stage{padding:12px;border-radius:12px;background:#f2f6fa;margin:7px 0;cursor:pointer;border:1px solid transparent}.stage.active{border-color:#12366d;background:#e9f1fb}.stage.done{background:#eff9f3}
+.history-item{padding:11px;border-bottom:1px solid #edf1f5}.history-item:last-child{border:0}
+@media(max-width:700px){.exec-wrap{grid-template-columns:1fr}}
+</style>
+
+<script>
+let execTasks=[],execStart=null,execTimer=null,currentStage=0,history=[];
+const stageTimes={};
+function dutyIndexForCrew(a, idx){
+ const r=(a.rank||'').toUpperCase();
+ if(r==='MASTER'||r==='2ND MASTER') return 0;
+ if(r==='CHIEF OFFICER') return 1;
+ if(r==='CHIEF ENGINEER') return 2;
+ if(r==='1ST ENGINEER'||r==='2ND ENGINEER') return 3;
+ if(r==='BOSUN') return 4;
+ if(r==='ASST. BOSUN') return 5;
+ if(r==='AB') return 6 + Math.min(2, idx);
+ if(r==='OILER') return 9;
+ return -1;
+}
+function openExecution(){
+ const d=drills[drillSel.value];
+ execStart=new Date(); currentStage=0; execTasks=[];
+ const active=assignments.filter(a=>a.onboard);
+ active.forEach((a,i)=>{
+   const di=dutyIndexForCrew(a,i);
+   let duty=di>=0 ? d.tasks[Math.min(di,d.tasks.length-1)] : null;
+   let team=di>=0 && d.teams[di] ? d.teams[di] : 'CREW SUPPORT';
+   if((a.rank||'').toUpperCase()==='COOK'){
+     duty=['Prepare drinking water/refreshments and support crew welfare as required.','Remain in the assigned safe area unless otherwise instructed.','Assist with emergency supplies and follow Master/Chief Officer instructions.'];
+     team='GALLEY / CREW SUPPORT';
+   }
+   execTasks.push({name:a.name,rank:a.rank,team:team,tasks:Array.isArray(duty)?duty:[],done:false});
+ });
+ renderExecution(); showApp('drill');
+ document.getElementById('page-drill').scrollIntoView({behavior:'smooth'}); startTimer();
+}
+function renderExecution(){
+ const p=document.getElementById('page-drill');
+ const d=drills[drillSel.value];
+ p.innerHTML=`<div class="card"><div class="title">🚨 LIVE DRILL • ${drillSel.value}</div>
+ <div class="grid2"><div><div class="small">STARTED</div><b>${execStart?execStart.toLocaleTimeString():''}</b></div><div><div class="small">STATUS</div><b id="execStatus">IN PROGRESS</b></div></div>
+ <div class="timer" id="liveTimer">00:00:00</div><div class="progress"><i id="taskProgress"></i></div><div class="small" id="progressText" style="margin-top:6px"></div></div>
+ <div class="exec-wrap"><div class="card"><div class="title">👥 CREW TASK CONTROL</div><div id="execTasks"></div></div>
+ <div><div class="card"><div class="title">🧭 DRILL SEQUENCE</div><div id="execStages"></div></div>
+ <div class="card"><div class="title">📢 SIGNAL / COMMUNICATION</div><div class="signal-box">${d.signals}</div></div>
+ <div class="card"><div class="title">📝 QUICK NOTES</div><textarea id="execNotes" rows="5" placeholder="Observation / finding / communication..."></textarea></div>
+ <div class="actions"><button class="danger" onclick="finishExecution()">■ COMPLETE DRILL</button></div></div></div>`;
+ document.getElementById('execTasks').innerHTML=execTasks.map((t,i)=>`<div class="task-row ${t.done?'done':''}"><input type="checkbox" ${t.done?'checked':''} onchange="toggleExecTask(${i},this.checked)"><div class="task-text"><b>${i+1}. ${t.name}</b><div class="small">${t.rank} • ${t.team}</div><ul style="margin:6px 0 0 18px;padding:0">${t.tasks.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>`).join('');
+ document.getElementById('execStages').innerHTML=d.steps.map((s,i)=>`<div class="stage ${i<currentStage?'done':''} ${i===currentStage?'active':''}" onclick="setStage(${i})"><b>${i+1}. ${s}</b><div class="small">${i===currentStage?'CURRENT STAGE':i<currentStage?'COMPLETED':'PENDING'}</div></div>`).join('');
+ updateProgress();
+}
+function toggleExecTask(i,v){execTasks[i].done=v;renderExecution();}
+function setStage(i){currentStage=i;renderExecution();}
+function updateProgress(){let done=execTasks.filter(x=>x.done).length,total=execTasks.length||1;let pct=Math.round(done/total*100);document.getElementById('taskProgress').style.width=pct+'%';document.getElementById('progressText').textContent=`${done} of ${total} crew tasks completed • ${pct}%`;}
+function finishExecution(){
+ stopTimer();
+ const end=new Date(),d=drills[drillSel.value];
+ const item={id:Date.now(),type:drillSel.value,date:document.getElementById('date').value,time:document.getElementById('time').value||execStart?.toLocaleTimeString()||'',start:execStart?.toISOString(),end:end.toISOString(),completed:execTasks.filter(x=>x.done).length,total:execTasks.length,notes:document.getElementById('execNotes')?.value||'',crew:execTasks};
+ history.unshift(item);history=history.slice(0,30);localStorage.setItem('csmDrillHistory',JSON.stringify(history));
+ document.getElementById('dashStatus').textContent='COMPLETED';
+ renderHistory();
+ alert('Drill completed and saved to Drill History.');
+ showApp('reports');
+}
+function loadHistory(){try{history=JSON.parse(localStorage.getItem('csmDrillHistory'))||[]}catch(e){history=[]}}
+function renderHistory(){
+ const p=document.getElementById('page-reports'); if(!p)return;
+ p.innerHTML=`<div class="card"><div class="title">DRILL HISTORY</div><div class="small">Saved locally on this device.</div>${history.length?history.map(h=>`<div class="history-item"><b>${h.type}</b><div class="small">${h.date||'-'} • ${h.time||'-'} • ${h.completed}/${h.total} crew tasks completed</div><div style="margin-top:5px;font-size:12px">${h.notes||'No notes.'}</div></div>`).join(''):'<p class="small">No completed drills yet.</p>'}</div>`;
+}
+const oldShowApp2=showApp;
+showApp=function(page){
+ oldShowApp2(page);
+ if(page==='reports'){loadHistory();renderHistory();}
+ if(page==='drill' && execTasks.length===0){openExecution();}
+};
+document.addEventListener('DOMContentLoaded',()=>{loadHistory();});
+</script>
+
+<script>
+function renderPremiumHome(){
+ const p=document.getElementById('page-home');
+ p.innerHTML=`<div class="tanker-hero">
+  <div class="hero-kicker">CENTRAL STAR MARINE SUPPLIES PTE LTD</div>
+  <div class="hero-title">MT. CSM WYVERN</div>
+  <div class="hero-sub">EMERGENCY DRILL MANAGEMENT</div>
+  <div class="ship-badge">⚓ <b>PREPARE</b> · <b>RESPOND</b> · <b>STAY SAFE</b></div>
+ </div>
+ <div class="stat-strip">
+  <div class="vstat"><small>VESSEL STATUS</small><b class="ok">● AT ANCHORAGE</b></div>
+  <div class="vstat"><small>CREW ON BOARD</small><b>13 PERSON</b></div>
+  <div class="vstat"><small>DRILL TYPES</small><b>11 ACTIVE</b></div>
+  <div class="vstat"><small>ANNUAL PROGRESS</small><b class="warn">READY TO EXECUTE</b></div>
+ </div>
+ <div class="card"><div class="quick-title">⚡ QUICK START DRILL</div>
+ <div class="quick-grid">
+  <button class="quick qfire" onclick="launchByName('Fire Drill')">🔥<br>FIRE DRILL</button>
+  <button class="quick qmob" onclick="launchByName('Man Overboard Drill')">🛟<br>MAN OVERBOARD</button>
+  <button class="quick qoil" onclick="launchByName('Oil / Chemical Spill (SOPEP)')">🛢️<br>OIL SPILL</button>
+  <button class="quick qmed" onclick="launchByName('Medical Emergency Drill')">✚<br>MEDICAL EMERGENCY</button>
+  <button class="quick qspace" onclick="launchByName('Enclosed Space Entry Drill')">☣️<br>ENCLOSED SPACE</button>
+  <button class="quick qabandon" onclick="launchByName('Abandon Ship / Muster Drill')">🚢<br>ABANDON SHIP</button>
+  <button class="quick qsteer" onclick="launchByName('Emergency Steering Drill')">⚓<br>EMERGENCY STEERING</button>
+  <button class="quick qother" onclick="showApp('schedule')">▦<br>FULL SCHEDULE</button>
+ </div></div>
+ <div class="dashboard-cols">
+  <div class="card"><div class="title">ANNUAL DRILL CONTROL</div><div class="mini-list">
+   <div class="mini-item"><span>Abandon Ship / Muster</span><span class="pill">MONTHLY</span></div>
+   <div class="mini-item"><span>Fire Drill</span><span class="pill">MONTHLY</span></div>
+   <div class="mini-item"><span>Man Overboard</span><span class="pill">QUARTERLY</span></div>
+   <div class="mini-item"><span>Enclosed Space</span><span class="pill">2-MONTHLY</span></div>
+   <div class="mini-item"><span>Emergency Steering</span><span class="pill">3-MONTHLY</span></div>
+  </div></div>
+  <div class="card"><div class="title">VESSEL SAFETY CENTER</div>
+   <div class="mini-list"><div class="mini-item"><span>👥 Crew Assignment</span><b>13</b></div><div class="mini-item"><span>📋 Drill History</span><b id="homeHistoryCount">0</b></div><div class="mini-item"><span>🚨 Live Execution</span><b class="ok">READY</b></div><div class="mini-item"><span>📄 Final Reports</span><b>OPEN</b></div></div>
+  </div>
+ </div>`;
+ let hc=document.getElementById('homeHistoryCount'); try{hc.textContent=(JSON.parse(localStorage.getItem('csmDrillHistory'))||[]).length}catch(e){}
+}
+function launchByName(name){
+ const keys=Object.keys(drills||{}); let k=keys.find(x=>x.toLowerCase()===name.toLowerCase())||keys.find(x=>x.toLowerCase().includes(name.toLowerCase().split(' ')[0]));
+ if(k){drillSel.value=k;openExecution()}else{showApp('drill')}
+}
+const oldHomeShow=showApp;
+showApp=function(page){oldHomeShow(page);if(page==='home')renderPremiumHome();};
+document.addEventListener('DOMContentLoaded',()=>{setTimeout(renderPremiumHome,50)});
+</script>
+
+<script>
+function renderReferenceDashboard(){
+ const p=document.getElementById('page-home');
+ p.innerHTML=`<div class="ref-shell"><div class="ref-layout">
+ <aside class="ref-side"><div class="ref-logo"><div class="ref-anchor">⚓</div>CSM WYVERN<span>SAFETY • PEOPLE • OPERATION</span></div>
+ <div class="ref-nav">
+ <button class="active">⌂ &nbsp; Home</button>
+ <button onclick="showApp('schedule')">▣ &nbsp; Drill Schedule</button>
+ <button onclick="showApp('drill')">▶ &nbsp; Start Drill</button>
+ <button onclick="showApp('crew')">♟ &nbsp; Crew Management</button>
+ <button onclick="showApp('drill')">☑ &nbsp; Drill Execution</button>
+ <button onclick="showApp('reports')">▤ &nbsp; Reports</button>
+ <button onclick="showApp('reports')">◷ &nbsp; History</button>
+ </div><div class="ref-side-foot">DISCIPLINE<br>PREVENTION<br>PREPAREDNESS<br>OUR STRENGTH</div></aside>
+ <main class="ref-main">
+  <section class="ref-hero"><div class="ref-date" id="refDate"></div><div class="ref-kicker">CENTRAL STAR MARINE SUPPLIES PTE LTD</div>
+   <div class="ref-h1">MT. CSM WYVERN</div><div class="ref-sub">EMERGENCY DRILL MANAGEMENT</div><div class="ref-slogan">PREPARE · RESPOND · STAY SAFE</div><div class="ref-status">⚓ &nbsp; TANKER OPERATIONS</div>
+  </section>
+  <section class="ref-stats"><div class="ref-stat"><small>VESSEL STATUS</small><b class="green-t">● AT ANCHORAGE</b></div><div class="ref-stat"><small>CREW ON BOARD</small><b>13 PERSON</b></div><div class="ref-stat"><small>DRILL TYPES</small><b>11 TYPES</b></div><div class="ref-stat"><small>SAFETY STATUS</small><b class="green-t">READY</b></div></section>
+  <section class="ref-panel"><div class="ref-panel-title">⚡ QUICK START DRILL <span>Select a drill to start immediately</span></div>
+   <div class="ref-quick">
+    <button class="ref-q rq1" onclick="launchByName('Fire Drill')">🔥<br>FIRE DRILL</button>
+    <button class="ref-q rq2" onclick="launchByName('Man Overboard Drill')">🛟<br>MAN OVERBOARD</button>
+    <button class="ref-q rq3" onclick="launchByName('Oil / Chemical Spill (SOPEP)')">🛢️<br>OIL SPILL DRILL</button>
+    <button class="ref-q rq4" onclick="launchByName('Medical Emergency Drill')">✚<br>MEDICAL EMERGENCY</button>
+    <button class="ref-q rq5" onclick="launchByName('Enclosed Space Entry Drill')">☣️<br>ENCLOSED SPACE</button>
+    <button class="ref-q rq6" onclick="launchByName('Abandon Ship / Muster Drill')">🚢<br>ABANDON SHIP</button>
+    <button class="ref-q rq7" onclick="launchByName('Emergency Steering Drill')">⚓<br>EMERGENCY STEERING</button>
+    <button class="ref-q rq8" onclick="showApp('schedule')">▦<br>FULL SCHEDULE</button>
+   </div>
+  </section>
+  <div class="ref-bottom"><section class="ref-panel"><div class="ref-panel-title">▣ ANNUAL DRILL PROGRESS</div><div style="font-size:35px;font-weight:900">READY</div><div class="ref-mini"><div class="ref-row"><span>Monthly mandatory</span><span class="ref-pill">TRACKED</span></div><div class="ref-row"><span>Quarterly drills</span><span class="ref-pill">TRACKED</span></div><div class="ref-row"><span>Periodic drills</span><span class="ref-pill">TRACKED</span></div></div></section>
+  <section class="ref-panel"><div class="ref-panel-title">◷ RECENT DRILL HISTORY</div><div class="ref-mini"><div class="ref-row"><span>Drill execution</span><b>LIVE READY</b></div><div class="ref-row"><span>Crew assignment</span><b>13</b></div><div class="ref-row"><span>Final reports</span><b>OPEN</b></div></div></section></div>
+  <footer class="ref-footer"><div><b>⚓</b>BRIDGE</div><div><b>⚙</b>ENGINE</div><div><b>◉</b>SAFETY</div><div><b>◈</b>ENVIRONMENT</div><div><b>♟</b>CREW</div><div><b>▤</b>DOCUMENT</div><div><b>▦</b>MORE</div></footer>
+ </main></div></div>`;
+ document.getElementById('refDate').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'2-digit',month:'short',year:'numeric'})+'  •  '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+}
+const oldRefShow=showApp;
+showApp=function(page){oldRefShow(page);if(page==='home')setTimeout(renderReferenceDashboard,10)};
+document.addEventListener('DOMContentLoaded',()=>setTimeout(renderReferenceDashboard,100));
+</script>
+<style>.signal-box{background:#eef6ff;border-left:5px solid #12366d;border-radius:10px;padding:12px;font-size:13px;line-height:1.55}.task-text ul{line-height:1.45}.task-row b{font-size:14px}</style>
+
+<style id="v13-pro">
+/* V13 PRO DRILL CONTROL */
+.v13-card{background:#fff;border:1px solid #dfe7f0;border-radius:16px;padding:14px;box-shadow:0 6px 18px #0b315d12;margin-top:12px}
+.v13-head{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #e7edf4;padding-bottom:10px;margin-bottom:10px}
+.v13-title{font-size:16px;font-weight:900;color:#102f59;letter-spacing:.4px}
+.v13-sub{font-size:11px;color:#718096}
+.v13-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v13-field{background:#f7f9fc;border:1px solid #e1e8f0;border-radius:12px;padding:10px}
+.v13-field label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#6b7788;font-weight:800;display:block;margin-bottom:5px}
+.v13-field b{font-size:14px}
+.v13-crewgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.v13-crew{border:1px solid #dfe6ef;border-radius:12px;padding:9px;background:#fbfcfe;display:flex;gap:9px;align-items:flex-start}
+.v13-crew input{width:18px;height:18px;margin-top:1px;accent-color:#12366d}
+.v13-crew strong{font-size:12px}.v13-crew small{display:block;color:#738095;margin-top:2px}
+.v13-task{border-left:4px solid #12366d;background:#f7faff;border-radius:10px;padding:9px;margin:7px 0}
+.v13-task b{font-size:12px}.v13-task ul{margin:5px 0 0 17px;padding:0;font-size:11px;line-height:1.45}
+.v13-team{display:inline-block;font-size:9px;font-weight:900;letter-spacing:.5px;background:#e7f0fb;color:#12366d;padding:4px 7px;border-radius:99px;margin-top:5px}
+.v13-alert{padding:10px;border-radius:12px;background:#fff6e5;border:1px solid #f2d28d;color:#72520b;font-size:11px;line-height:1.45}
+.v13-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.v13-kpi{padding:10px;border-radius:12px;background:#f5f8fc;text-align:center}.v13-kpi b{font-size:20px;display:block;color:#12366d}.v13-kpi span{font-size:9px;color:#6d7786;text-transform:uppercase}
+.v13-report{font-family:Arial,sans-serif;line-height:1.5}.v13-report h2{color:#12366d}.v13-report table{width:100%;border-collapse:collapse;font-size:11px}.v13-report th,.v13-report td{border:1px solid #d9e0e8;padding:6px;text-align:left}.v13-report th{background:#edf3fa}
+@media(max-width:650px){.v13-grid,.v13-crewgrid{grid-template-columns:1fr}.v13-kpis{grid-template-columns:repeat(2,1fr)}}
+@media print{body{background:#fff!important}.bottom-nav,.ref-side,.ref-footer{display:none!important}.v13-card{box-shadow:none;border:1px solid #bbb}.no-print{display:none!important}}
+</style>
+
+<script id="v13-pro-js">
+let v13SelectedCrew = null;
+
+function v13CrewTaskData(drillName, a, idx){
+  const d = drills[drillName];
+  const di = dutyIndexForCrew(a, idx);
+  let duty = di>=0 ? d.tasks[Math.min(di,d.tasks.length-1)] : [];
+  let team = di>=0 && d.teams[di] ? d.teams[di] : 'CREW SUPPORT';
+  if((a.rank||'').toUpperCase()==='COOK'){
+    duty=[
+      'Prepare drinking water/refreshments and support crew welfare as required.',
+      'Remain in the assigned safe area unless otherwise instructed.',
+      'Assist with emergency supplies and follow Master / Chief Officer instructions.'
+    ];
+    team='GALLEY / CREW SUPPORT';
+  }
+  return {duty:Array.isArray(duty)?duty:[],team};
+}
+
+function v13RenderBrief(name){
+  const d=drills[name];
+  const p=document.getElementById('page-drill');
+  const active=assignments.filter(a=>a.onboard);
+  p.innerHTML=`
+  <div class="v13-card">
+    <div class="v13-head"><div><div class="v13-title">🚨 PRE-DRILL BRIEFING</div><div class="v13-sub">Review crew, assignments and automatic duties before starting.</div></div><span class="ref-pill">READY</span></div>
+    <div class="v13-grid">
+      <div class="v13-field"><label>Drill Type</label><b>${name}</b></div>
+      <div class="v13-field"><label>Scenario</label><b>${document.getElementById('scenario')?.value || d.scenario || 'As per drill scenario'}</b></div>
+      <div class="v13-field"><label>Date</label><b>${document.getElementById('date')?.value || new Date().toISOString().slice(0,10)}</b></div>
+      <div class="v13-field"><label>Signal / Alarm</label><b>${d.signals}</b></div>
+    </div>
+  </div>
+  <div class="v13-card">
+    <div class="v13-head"><div><div class="v13-title">👥 CREW ON BOARD</div><div class="v13-sub">Uncheck any crew member not participating in this drill.</div></div><b>${active.length} CREW</b></div>
+    <div class="v13-crewgrid">
+      ${assignments.map((a,i)=>`<label class="v13-crew"><input type="checkbox" ${a.onboard?'checked':''} onchange="assignments[${i}].onboard=this.checked;v13RenderBrief('${name.replace(/'/g,"\\'")}')"><span><strong>${a.name}</strong><small>${a.rank}</small></span></label>`).join('')}
+    </div>
+    <div class="actions no-print" style="margin-top:12px">
+      <button class="primary" onclick="saveAssignments()">SAVE CREW</button>
+      <button class="green" onclick="v13StartSelected('${name.replace(/'/g,"\\'")}')">▶ START DRILL</button>
+    </div>
+  </div>
+  <div class="v13-card">
+    <div class="v13-head"><div><div class="v13-title">📋 AUTOMATIC TASK MATRIX</div><div class="v13-sub">Duties are generated from rank + drill type.</div></div></div>
+    ${active.length ? active.map((a,i)=>{
+      const x=v13CrewTaskData(name,a,i);
+      return `<div class="v13-task"><b>${i+1}. ${a.name}</b> <span style="color:#6c7888">• ${a.rank}</span><br><span class="v13-team">${x.team}</span><ul>${x.duty.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
+    }).join('') : '<div class="v13-alert">No crew selected. Select at least one participating crew member.</div>'}
+  </div>
+  <div class="v13-card">
+    <div class="v13-head"><div class="v13-title">🧭 DRILL SEQUENCE</div></div>
+    <div class="v13-kpis">${d.steps.map((s,i)=>`<div class="v13-kpi"><b>${i+1}</b><span>${s}</span></div>`).join('')}</div>
+  </div>`;
+  showAppBase('drill');
+}
+
+function v13StartSelected(name){
+  const active=assignments.filter(a=>a.onboard);
+  if(!active.length){alert('Select at least one crew member.');return;}
+  drillSel.value=name;
+  openExecution();
+}
+
+function v13Launch(name){
+  const key=Object.keys(drills||{}).find(k=>k.toLowerCase()===name.toLowerCase()) ||
+            Object.keys(drills||{}).find(k=>k.toLowerCase().includes(name.toLowerCase()));
+  if(!key){showApp('drill');return;}
+  drillSel.value=key;
+  const d=drills[key];
+  if(document.getElementById('scenario')) document.getElementById('scenario').value=d.scenario||'';
+  if(document.getElementById('date') && !document.getElementById('date').value) document.getElementById('date').value=new Date().toISOString().slice(0,10);
+  if(document.getElementById('time') && !document.getElementById('time').value) document.getElementById('time').value=new Date().toTimeString().slice(0,5);
+  v13RenderBrief(key);
+}
+
+function v13OpenReport(id){
+  loadHistory();
+  const h=history.find(x=>x.id===id);
+  if(!h){alert('Report not found.');return;}
+  const crewRows=(h.crew||[]).map((c,i)=>`<tr><td>${i+1}</td><td>${c.name}</td><td>${c.rank}</td><td>${c.team}</td><td>${c.done?'COMPLETED':'PENDING'}</td></tr>`).join('');
+  const box=document.getElementById('page-reports');
+  box.innerHTML=`<div class="v13-card"><div class="v13-head"><div><div class="v13-title">📄 FINAL DRILL REPORT</div><div class="v13-sub">CSM WYVERN • Emergency Drill Record</div></div><button class="primary no-print" onclick="window.print()">PRINT / SAVE PDF</button></div>
+  <div class="v13-report">
+  <h2>CSM WYVERN — ${h.type}</h2>
+  <p><b>Date:</b> ${h.date||'-'} &nbsp; <b>Time:</b> ${h.time||'-'} &nbsp; <b>Completion:</b> ${h.completed||0}/${h.total||0}</p>
+  <p><b>Status:</b> ${h.completed===h.total?'COMPLETED':'COMPLETED WITH PENDING TASKS'}</p>
+  <h3>Crew Participation & Task Status</h3>
+  <table><tr><th>No</th><th>Name</th><th>Rank</th><th>Team / Position</th><th>Status</th></tr>${crewRows}</table>
+  <h3>Observation / Finding</h3><div style="border:1px solid #d9e0e8;padding:10px;min-height:70px">${h.notes||'No finding recorded.'}</div>
+  <h3>Master / Officer Review</h3><p>Drill execution reviewed. Any deficiency shall be entered into the vessel SMS / corrective action process as applicable.</p>
+  </div></div>`;
+  showAppBase('reports');
+}
+
+function v13RenderHistory(){
+  loadHistory();
+  const p=document.getElementById('page-reports');
+  p.innerHTML=`<div class="v13-card"><div class="v13-head"><div><div class="v13-title">📚 DRILL HISTORY & REPORT CENTER</div><div class="v13-sub">Records are stored locally on this device.</div></div><b>${history.length} RECORDS</b></div>
+  ${history.length?history.map(h=>`<div class="history-item"><b>${h.type}</b><div class="small">${h.date||'-'} • ${h.time||'-'} • ${h.completed||0}/${h.total||0} tasks</div><div class="actions no-print" style="margin-top:7px"><button class="primary" onclick="v13OpenReport(${h.id})">VIEW REPORT</button></div></div>`).join(''):'<p class="small">No completed drills yet.</p>')}</div>`;
+  showAppBase('reports');
+}
+
+/* Keep the existing navigation engine but add V13 behaviour. */
+const v13OriginalShowApp = showApp;
+function showAppBase(page){ v13OriginalShowApp(page); }
+
+showApp = function(page){
+  if(page==='reports'){ v13RenderHistory(); return; }
+  if(page==='drill' && execTasks.length===0){
+    const key=drillSel?.value || Object.keys(drills)[0];
+    if(key) { drillSel.value=key; v13RenderBrief(key); return; }
+  }
+  v13OriginalShowApp(page);
+};
+
+const oldLaunchByNameV13 = launchByName;
+launchByName = function(name){ v13Launch(name); };
+
+document.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>{
+    const oldQuick=document.querySelectorAll('.ref-q,.quick');
+    oldQuick.forEach(btn=>{
+      const oc=btn.getAttribute('onclick');
+      if(oc && oc.includes('launchByName')) {
+        /* launchByName is overridden above, so no markup changes are required */
+      }
+    });
+  },150);
+});
+</script>
+
+
+<style id="v14-style">
+:root{--navy:#082b57;--blue:#0f4c8a;--gold:#e7b52d;--green:#0d7a4b;--red:#c92828}
+.v14-topbar{position:sticky;top:0;z-index:20;background:linear-gradient(90deg,#061d3b,#0d3e72);color:white;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 16px #001a3b33}
+.v14-brand{font-weight:950;letter-spacing:1px}.v14-brand small{display:block;font-weight:600;opacity:.75;letter-spacing:.4px}
+.v14-live{display:flex;align-items:center;gap:6px;font-size:10px}.v14-dot{width:8px;height:8px;border-radius:50%;background:#35d28a;box-shadow:0 0 0 5px #35d28a22}
+.v14-section{margin:12px 0 6px;font-size:11px;color:#55708e;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.v14-drills{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.v14-drill{border:0;border-radius:15px;padding:13px;color:#fff;text-align:left;min-height:96px;box-shadow:0 8px 18px #092d571c;cursor:pointer}
+.v14-drill strong{display:block;font-size:13px;line-height:1.2}.v14-drill span{display:block;margin-top:6px;font-size:9px;opacity:.85}
+.v14-drill:nth-child(4n+1){background:linear-gradient(135deg,#0b3768,#1764a7)}.v14-drill:nth-child(4n+2){background:linear-gradient(135deg,#8f1f27,#d24638)}.v14-drill:nth-child(4n+3){background:linear-gradient(135deg,#075b43,#0c9270)}.v14-drill:nth-child(4n+4){background:linear-gradient(135deg,#6a4c08,#b98914)}
+.v14-panel{background:#fff;border:1px solid #e0e7ef;border-radius:16px;padding:13px;box-shadow:0 7px 22px #082b5710;margin:10px 0}
+.v14-panel h3{margin:0 0 8px;color:var(--navy);font-size:14px}.v14-mini{font-size:10px;color:#728198}
+.v14-status{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.v14-status div{background:#f4f7fb;border-radius:12px;padding:10px;text-align:center}.v14-status b{display:block;color:var(--navy);font-size:18px}.v14-status span{font-size:8px;color:#718096;text-transform:uppercase}
+.v14-pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#edf5ff;color:#174b7f;font-size:9px;font-weight:900}
+.v14-btn{border:0;border-radius:11px;padding:10px 12px;font-weight:900;cursor:pointer}.v14-primary{background:var(--navy);color:#fff}.v14-green{background:var(--green);color:#fff}.v14-gold{background:var(--gold);color:#172033}
+.v14-table{width:100%;border-collapse:collapse;font-size:10px}.v14-table th,.v14-table td{padding:7px;border-bottom:1px solid #e8edf3;text-align:left}.v14-table th{color:#617187;background:#f6f8fb}
+@media(min-width:700px){.v14-drills{grid-template-columns:repeat(3,1fr)}}
+</style>
+
+<script id="v14-js">
+function v14Esc(x){return String(x??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function v14Dashboard(){
+  const names=Object.keys(drills), p=document.getElementById('page-home');
+  const completed=(typeof history!=='undefined'?history:[]).length;
+  p.innerHTML=`
+  <div class="v14-topbar"><div class="v14-brand">⚓ CSM WYVERN<small>EMERGENCY DRILL CONTROL</small></div><div class="v14-live"><i class="v14-dot"></i> SYSTEM READY</div></div>
+  <div class="v14-panel"><h3>🚢 VESSEL STATUS</h3><div class="v14-status">
+    <div><b>11</b><span>Drill Types</span></div><div><b>10+</b><span>Crew Roles</span></div><div><b>${completed}</b><span>Saved Records</span></div>
+  </div></div>
+  <div class="v14-section">Quick Start Emergency Drill</div>
+  <div class="v14-drills">${names.map((n,i)=>`<button class="v14-drill" onclick="v14Open('${v14Esc(n).replace(/'/g,"\\'")}')"><strong>${i+1}. ${v14Esc(n)}</strong><span>${drills[n].frequency.toUpperCase()} • TAP TO ASSIGN CREW</span></button>`).join('')}</div>
+  <div class="v14-panel"><h3>🛡️ DRILL CONTROL PRINCIPLE</h3><div class="v14-mini">ALERT → MUSTER → ASSESS → ASSIGN → RESPOND → COMMUNICATE → REPORT → DEBRIEF</div></div>`;
+  showAppBase('home');
+}
+function v14Open(name){
+  drillSel.value=name;
+  const d=drills[name];
+  if(document.getElementById('scenario')) document.getElementById('scenario').value=d.scenario;
+  v13RenderBrief(name);
+}
+function v14Library(){
+  const p=document.getElementById('page-crew');
+  const rows=assignments.map((a,i)=>`<tr><td>${i+1}</td><td>${v14Esc(a.name)}</td><td>${v14Esc(a.rank)}</td><td>${a.onboard?'ON BOARD':'OFF / NOT SELECTED'}</td></tr>`).join('');
+  p.innerHTML=`<div class="v14-panel"><h3>👥 CREW MASTER LIST</h3><div class="v14-mini">Crew list used for automatic drill assignment.</div><table class="v14-table"><tr><th>No</th><th>Name</th><th>Rank</th><th>Status</th></tr>${rows}</table></div>`;
+  showAppBase('crew');
+}
+window.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{try{v14Dashboard()}catch(e){}},250));
+</script>
+
+
+<script id="v15-dashboard-js">
+function v15Open(n){
+  if(typeof v14Open==='function') return v14Open(n);
+  drillSel.value=n; showApp('drill');
+}
+function v15Render(){
+ const p=document.getElementById('page-home'), names=Object.keys(drills||{});
+ let hist=[];
+ try{hist=JSON.parse(localStorage.getItem('csmDrillHistory')||'[]')}catch(e){}
+ p.innerHTML=`<div class="v15">
+ <section class="v15hero">
+  <div class="v15top"><div class="v15brand">CENTRAL STAR MARINE SUPPLIES PTE LTD<span>MARINE SAFETY & EMERGENCY MANAGEMENT SYSTEM</span></div><div class="v15clock" id="v15clock"></div></div>
+  <div class="v15center"><div class="v15eyebrow">EMERGENCY DRILL CONTROL CENTER</div><div class="v15name">MT. CSM WYVERN</div><div class="v15sub">TANKER • SAFETY • READINESS</div><div class="v15desc">One control center for drill planning, crew assignment, live execution, checklist and final report.</div><div class="v15status"><i class="v15dot"></i> SYSTEM ONLINE &nbsp; • &nbsp; DRILL CONTROL READY</div></div>
+ </section>
+ <div class="v15body">
+  <div class="v15kpis"><div class="v15kpi"><small>DRILL LIBRARY</small><b>${names.length}</b></div><div class="v15kpi"><small>CREW ON BOARD</small><b>${(assignments||[]).filter(x=>x.onboard).length}</b></div><div class="v15kpi"><small>SAVED REPORTS</small><b>${hist.length}</b></div><div class="v15kpi"><small>SAFETY STATUS</small><b class="v15green">READY</b></div></div>
+  <div class="v15section">QUICK START — EMERGENCY DRILL</div>
+  <div class="v15grid">${names.map((n,i)=>`<button class="v15card" onclick="v15Open('${String(n).replace(/'/g,"\\'")}')"><div class="v15num">${String(i+1).padStart(2,'0')}</div><div class="v15ct">${n}</div><div class="v15cf">${drills[n].frequency||'PERIODIC'} • OPEN CONTROL</div></button>`).join('')}</div>
+  <div class="v15cols">
+   <div class="v15panel"><h3>📅 DRILL READINESS</h3>
+    <div class="v15row"><span>Monthly mandatory drills</span><span class="v15pill">TRACKED</span></div>
+    <div class="v15row"><span>Quarterly / periodic drills</span><span class="v15pill">TRACKED</span></div>
+    <div class="v15row"><span>Crew task assignment</span><span class="v15pill">AUTO</span></div>
+    <div class="v15row"><span>Live execution & checklist</span><span class="v15pill">READY</span></div>
+   </div>
+   <div class="v15panel"><h3>⚡ CONTROL CENTER</h3><div class="v15bottom">
+    <button class="v15action" onclick="showApp('schedule')">DRILL<br>SCHEDULE</button>
+    <button class="v15action" onclick="showApp('crew')">CREW<br>LIST</button>
+    <button class="v15action" onclick="showApp('reports')">REPORT<br>HISTORY</button>
+    <button class="v15action" onclick="v15Open(names[0])">START<br>DRILL</button>
+   </div></div>
+  </div>
+ </div></div>`;
+ const tick=()=>{const e=document.getElementById('v15clock');if(e)e.innerHTML=new Date().toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short',year:'numeric'})+'<br>'+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'})};tick();setInterval(tick,1000);
+}
+document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{try{v15Render()}catch(e){}},500));
+</script>
+
+<script id="v16">
+let v16Timer=null,v16Sec=0,v16Step=0,v16Checks=[];
+function v16Start(name){
+ const d=drills[name]; if(!d)return;
+ const p=document.getElementById('page-drill');
+ v16Sec=0;v16Step=0;v16Checks=d.steps.map(()=>false);
+ const crew=assignments.filter(x=>x.onboard);
+ p.innerHTML=`<div class="v16bar"><div><div class="v16title">🚨 LIVE DRILL CONTROL</div><div class="v16mode">MT. CSM WYVERN • ${name}</div></div><button onclick="v16Exit()">EXIT</button></div>
+ <div class="v16timer" id="v16timer">00:00:00</div>
+ <div class="v16steps" id="v16steps">${d.steps.map((x,i)=>`<div class="v16step ${i===0?'active':''}" id="v16s${i}"><b>${i+1}</b><br>${x}</div>`).join('')}</div>
+ <div class="v14-panel"><h3>📡 SIGNAL / ALARM</h3><div class="v15desc">${d.signals}</div></div>
+ <div class="v14-panel"><h3>👥 CREW — ${crew.length} PARTICIPANTS</h3>
+ ${crew.map((a,i)=>{let x=v13CrewTaskData(name,a,i);return `<div class="v16check"><input type="checkbox" onchange="this.closest('.v16check').classList.toggle('done')"><div><b>${a.name}</b> • ${a.rank}<small>${x.team} — ${x.duty[0]||''}</small></div></div>`}).join('')}</div>
+ <div class="v14-panel"><h3>☑️ DRILL STEP CHECKLIST</h3>
+ ${d.steps.map((x,i)=>`<label class="v16check"><input type="checkbox" id="v16c${i}" onchange="v16Toggle(${i},this.checked)"><div><b>${i+1}. ${x}</b><small>Complete this stage and continue to the next step.</small></div></label>`).join('')}</div>
+ <div class="v14-panel"><h3>📝 OBSERVATION / FINDING</h3><textarea id="v16note" class="v16note" placeholder="Enter observation, deficiency, corrective action or remarks..."></textarea>
+ <div style="display:flex;gap:8px;margin-top:9px"><button class="v14-btn v14-primary" onclick="v16Save('${name.replace(/'/g,"\\'")}')">SAVE PROGRESS</button><button class="v14-btn v14-green" onclick="v16Complete('${name.replace(/'/g,"\\'")}')">✓ COMPLETE DRILL</button></div></div>`;
+ clearInterval(v16Timer);v16Timer=setInterval(()=>{v16Sec++;let h=Math.floor(v16Sec/3600),m=Math.floor(v16Sec%3600/60),s=v16Sec%60;let e=document.getElementById('v16timer');if(e)e.textContent=[h,m,s].map(x=>String(x).padStart(2,'0')).join(':')},1000);
+}
+function v16Toggle(i,on){
+ const e=document.getElementById('v16s'+i); if(e)e.className='v16step '+(on?'done':'active');
+ if(on && i+1<drills[drillSel.value].steps.length){let n=document.getElementById('v16s'+(i+1));if(n)n.className='v16step active'}
+}
+function v16Save(name){
+ const checks=Array.from(document.querySelectorAll('[id^="v16c"]')).map(x=>x.checked);
+ localStorage.setItem('csmLiveDrill',JSON.stringify({name,checks,seconds:v16Sec,note:document.getElementById('v16note')?.value||''}));
+ alert('Live drill progress saved on this device.');
+}
+function v16Complete(name){
+ const d=drills[name], checks=Array.from(document.querySelectorAll('[id^="v16c"]')).map(x=>x.checked);
+ const rec={id:Date.now(),type:name,date:new Date().toLocaleDateString('en-GB'),time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),completed:checks.filter(Boolean).length,total:checks.length,notes:document.getElementById('v16note')?.value||'',crew:assignments.filter(x=>x.onboard).map((x,i)=>({name:x.name,rank:x.rank,team:(v13CrewTaskData(name,x,i).team),done:true})),duration:v16Sec};
+ let h=[];try{h=JSON.parse(localStorage.getItem('csmDrillHistory')||'[]')}catch(e){};h.unshift(rec);localStorage.setItem('csmDrillHistory',JSON.stringify(h));clearInterval(v16Timer);
+ if(confirm('Drill completed. Open Final Report now?')) v13OpenReport(rec.id); else v16Exit();
+}
+function v16Exit(){clearInterval(v16Timer);showApp('home')}
+const oldV15Launch=launchByName;
+launchByName=function(name){let k=Object.keys(drills||{}).find(x=>x.toLowerCase().includes(name.toLowerCase().split(' ')[0]));if(k){drillSel.value=k;v16Start(k)}else{oldV15Launch(name)}};
+</script>
+
+<script id="v17-bahasa">
+const V17_TEAM_ID = {'COMMAND TEAM': 'TIM KOMANDO', 'MUSTER / RESCUE LEADER': 'PEMIMPIN MUSTER / PENYELAMATAN', 'ENGINE ROOM TEAM LEADER': 'PEMIMPIN TIM KAMAR MESIN', 'RESCUE BOAT MACHINERY': 'MESIN SEKOCI PENOLONG', 'RESCUE BOAT / DAVIT': 'SEKOCI PENOLONG / DAVIT', 'DAVIT & LAUNCHING': 'DAVIT & PELUNCURAN', 'RESCUE BOAT CREW': 'AWAK SEKOCI PENOLONG', 'MUSTER & SAFETY': 'MUSTER & KESELAMATAN', 'ENGINE ROOM SUPPORT': 'DUKUNGAN KAMAR MESIN', 'CREW SUPPORT': 'DUKUNGAN AWAK KAPAL', 'GALLEY / CREW SUPPORT': 'DAPUR / DUKUNGAN AWAK KAPAL', 'FIRE PARTY LEADER': 'PEMIMPIN TIM PEMADAM', 'ENGINE ROOM COMMAND': 'KOMANDO KAMAR MESIN', 'FIRE PARTY': 'TIM PEMADAM', 'FIRE PARTY SUPPORT': 'DUKUNGAN TIM PEMADAM', 'BOUNDARY & EVACUATION': 'PENGAMANAN BATAS & EVAKUASI', 'MOB / RESCUE TEAM LEADER': 'PEMIMPIN TIM MOB / PENYELAMATAN', 'ENGINE ROOM COORDINATOR': 'KOORDINATOR KAMAR MESIN', 'RESCUE EQUIPMENT LEADER': 'PENANGGUNG JAWAB PERALATAN PENYELAMATAN', 'LOOKOUT 1': 'PENGAMAT 1', 'LOOKOUT 2 / RESCUE': 'PENGAMAT 2 / PENYELAMATAN', 'RESCUE / SAFETY': 'PENYELAMATAN / KESELAMATAN', 'RESCUE TEAM LEADER': 'PEMIMPIN TIM PENYELAMATAN', 'EQUIPMENT & MACHINERY': 'PERALATAN & MESIN', 'RESCUE / ENTRY SUPPORT': 'DUKUNGAN PENYELAMATAN / MASUK', 'SAFETY ATTENDANT': 'PETUGAS KESELAMATAN', 'GAS MONITORING': 'PEMANTAUAN GAS', 'BOUNDARY & SAFETY': 'PENGAMANAN BATAS & KESELAMATAN', 'TECHNICAL / ENGINE ROOM': 'TEKNIS / KAMAR MESIN', 'COMMAND / BRIDGE': 'KOMANDO / ANJUNGAN', 'GMDSS OPERATOR': 'OPERATOR GMDSS', 'BRIDGE COMMUNICATION': 'KOMUNIKASI ANJUNGAN', 'COMMUNICATION / DECK': 'KOMUNIKASI / DEK', 'COMMUNICATION SUPPORT': 'DUKUNGAN KOMUNIKASI', 'LOOKOUT / SAFETY': 'PENGAMAT / KESELAMATAN', 'RADIO SUPPORT': 'DUKUNGAN RADIO', 'LOG / DOCUMENT': 'LOG / DOKUMEN', 'TECHNICAL SUPPORT': 'DUKUNGAN TEKNIS', 'FRC TEAM LEADER': 'PEMIMPIN TIM FRC', 'FRC CREW': 'AWAK FRC', 'DAVIT / MACHINERY': 'DAVIT / MESIN', 'DAVIT OPERATOR': 'OPERATOR DAVIT', 'DECK LAUNCH TEAM': 'TIM PELUNCURAN DEK', 'DECK SUPPORT': 'DUKUNGAN DEK', 'BRIDGE TEAM LEADER': 'PEMIMPIN TIM ANJUNGAN', 'STEERING GEAR TEAM LEADER': 'PEMIMPIN TIM MESIN KEMUDI', 'STEERING GEAR OPERATOR': 'OPERATOR MESIN KEMUDI', 'COMMUNICATION RUNNER': 'PETUGAS PENGHUBUNG KOMUNIKASI', 'EMERGENCY STEERING SUPPORT': 'DUKUNGAN KEMUDI DARURAT', 'SAFETY & ACCESS': 'KESELAMATAN & AKSES', 'SPILL TEAM LEADER': 'PEMIMPIN TIM PENANGGULANGAN TUMPAHAN', 'PUMP & MACHINERY': 'POMPA & MESIN', 'SOPEP EQUIPMENT LEADER': 'PENANGGUNG JAWAB PERALATAN SOPEP', 'CONTAINMENT TEAM': 'TIM PENAHAN TUMPAHAN', 'SPILL RESPONSE': 'TIM PENANGGULANGAN TUMPAHAN', 'RECOVERY TEAM': 'TIM PEMBERSIHAN / PENGAMBILAN', 'DECK SAFETY': 'KESELAMATAN DEK', 'MASTER / COMMAND': 'MASTER / KOMANDO', 'SSO / DECK LEADER': 'SSO / PEMIMPIN DEK', 'ENGINE ROOM SECURITY': 'KEAMANAN KAMAR MESIN', 'ENGINE SUPPORT': 'DUKUNGAN MESIN', 'ACCESS CONTROL': 'PENGENDALIAN AKSES', 'SEARCH TEAM': 'TIM PEMERIKSAAN', 'GANGWAY WATCH': 'JAGA GANGWAY', 'PATROL / SUPPORT': 'PATROLI / DUKUNGAN', 'SAFETY TEAM': 'TIM KESELAMATAN', 'MEDICAL TEAM LEADER': 'PEMIMPIN TIM MEDIS', 'MEDICAL / FIRST AID': 'MEDIS / PERTOLONGAN PERTAMA', 'FIRST AID EQUIPMENT': 'PERALATAN PERTOLONGAN PERTAMA', 'STRETCHER TEAM': 'TIM TANDU', 'FIRST AIDER': 'PETUGAS PERTOLONGAN PERTAMA', 'SAFETY / ACCESS': 'KESELAMATAN / AKSES', 'ER COMMAND': 'KOMANDO KAMAR MESIN', 'ENGINE ROOM TEAM': 'TIM KAMAR MESIN', '1ST / 2ND ENGINEER': 'MASINIS 1 / MASINIS 2', 'TECHNICAL TEAM': 'TIM TEKNIS', 'SAFETY WATCH': 'PETUGAS JAGA KESELAMATAN', 'COMMUNICATION': 'KOMUNIKASI', 'OILER / SUPPORT': 'OILER / DUKUNGAN', 'COOK / CREW SUPPORT': 'COOK / DUKUNGAN AWAK KAPAL'};
+function v17TeamID(x){return V17_TEAM_ID[x]||x}
+function v17TranslateDuty(t){
+ const map={
+  "Take command":"Ambil alih komando",
+  "Lead muster":"Pimpin muster",
+  "Ensure emergency fire pump":"Pastikan emergency fire pump",
+  "Assist":"Bantu",
+  "Prepare":"Siapkan",
+  "Operate":"Operasikan",
+  "Support":"Berikan dukungan",
+  "Maintain":"Pertahankan",
+  "Control":"Kendalikan",
+  "Check":"Periksa",
+  "Bring":"Bawa",
+  "Collect":"Kumpulkan",
+  "Record":"Catat",
+  "Report":"Laporkan",
+  "Coordinate":"Koordinasikan",
+  "Monitor":"Pantau",
+  "Conduct":"Laksanakan",
+  "Secure":"Amankan",
+  "Act as":"Bertindak sebagai",
+  "Provide":"Berikan",
+  "Remain":"Tetap berada",
+  "Identify":"Identifikasi",
+  "Deploy":"Pasang / gunakan",
+  "Close":"Tutup",
+  "Stop":"Hentikan",
+  "Isolate":"Isolasi",
+  "Verify":"Verifikasi",
+  "Prepare drinking water/refreshments":"Siapkan air minum / minuman untuk awak kapal",
+  "follow Master / CO instructions":"ikuti instruksi Master / Chief Officer"
+ };
+ let out=t;
+ Object.keys(map).sort((a,b)=>b.length-a.length).forEach(k=>out=out.replace(k,map[k]));
+ return out;
+}
+/* Override the duty card renderer used by V13/V16. */
+v13CrewTaskData = function(drillName,a,idx){
+ const d=drills[drillName];
+ const di=dutyIndexForCrew(a,idx);
+ let duty=di>=0?d.tasks[Math.min(di,d.tasks.length-1)]:[];
+ let team=di>=0&&d.teams[di]?d.teams[di]:'CREW SUPPORT';
+ if((a.rank||'').toUpperCase()==='COOK'){
+  duty=[
+   'Siapkan air minum / minuman untuk awak kapal dan dukung kebutuhan kesejahteraan awak sesuai kebutuhan.',
+   'Tetap berada di area aman yang ditentukan kecuali diperintahkan lain.',
+   'Bantu menyiapkan perlengkapan darurat dan ikuti instruksi Master / Chief Officer.'
+  ];
+  team='GALLEY / CREW SUPPORT';
+ }
+ return {duty:(Array.isArray(duty)?duty:[]).map(v17TranslateDuty),team:v17TeamID(team)};
+};
+</script>
+</body>
+</html>
